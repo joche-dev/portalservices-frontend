@@ -3,11 +3,12 @@ import { createContext, useEffect, useState } from 'react';
 
 export const UserContext = createContext();
 
-const URL_BASE = 'http://localhost:5000/users'
+const URL_BASE = 'http://localhost:5000/users';
 const initialStateToken = localStorage.getItem('token') || null;
 
 const UserProvider = ({ children }) => {
   const [token, setToken] = useState(initialStateToken);
+  const [user, setUser] = '';
 
   useEffect(() => {
     if (token) {
@@ -24,8 +25,9 @@ const UserProvider = ({ children }) => {
       body: JSON.stringify({ email, password }),
     });
     const data = await response.json();
-    setToken(data.token || null);
-    return data;
+    // setUser(data.user || null);
+    // setToken(data.token || null);
+    console.log(data);
   };
 
   const registerUsuario = async (nombre, email, contraseña, ciudad, comuna) => {
@@ -48,6 +50,7 @@ const UserProvider = ({ children }) => {
         loginUsuario,
         registerUsuario,
         token,
+        user,
         logout,
       }}
     >

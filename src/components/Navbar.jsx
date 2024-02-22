@@ -8,7 +8,7 @@ const Navigation = () => {
 
   return (
     <Navbar expand="sm" >
-      <Container>
+      <Container className='justify-content-between'>
         <Navbar.Brand>
           <Link
             to="/"
@@ -17,11 +17,19 @@ const Navigation = () => {
             Portal de Servicios
           </Link>
         </Navbar.Brand>
+        <Navbar.Brand>
+          <Link
+            to="/services"
+            className="text-decoration-none p-2"
+          >
+            Servicios
+          </Link>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
-          <Nav className="me-auto">
+          <Nav>
             <Link to="/login">
-              <Button variant="success">Login</Button>
+              <Button variant="success" className='me-2'>Login</Button>
             </Link>
             <Link to="/register">
               <Button variant="secondary">Register</Button>
