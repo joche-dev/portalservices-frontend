@@ -1,38 +1,29 @@
-import { useContext } from 'react';
-import { UserContext } from '../providers/UserProvider';
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from "react-router-dom";
 import { Container, Navbar, Nav, Button } from 'react-bootstrap';
+import Logo from "./Logo";
 
 const Navigation = () => {
-  const { token, logout } = useContext(UserContext);
-
+  
   return (
-    <Navbar expand="sm" >
-      <Container className='justify-content-between'>
+    <Navbar expand="md" >
+      <Container>
         <Navbar.Brand>
-          <Link
-            to="/"
-            className="text-decoration-none p-2"
-          >
+          <Link to="/" className="logo">
+          <Logo />
             Portal de Servicios
           </Link>
         </Navbar.Brand>
-        <Navbar.Brand>
-          <Link
-            to="/services"
-            className="text-decoration-none p-2"
-          >
-            Servicios
-          </Link>
-        </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-nav" />
-        <Navbar.Collapse id="navbar-nav">
+        <Navbar.Collapse id="navbar-nav" className="justify-content-end">
           <Nav>
-            <Link to="/login">
-              <Button variant="success" className='me-2'>Login</Button>
-            </Link>
-            <Link to="/register">
-              <Button variant="secondary">Register</Button>
+            <NavLink className={({isActive})=> isActive? 'link active' : 'link' } to={"/"}>
+              Home
+            </NavLink>
+            <NavLink className={({isActive})=> isActive? 'link active' : 'link' } to={"/services"}>
+              Servicios
+            </NavLink>
+            <Link to={"/login"}><Button variant="success ms-2">
+              Iniciar Sesión</Button>
             </Link>
           </Nav>
         </Navbar.Collapse>
