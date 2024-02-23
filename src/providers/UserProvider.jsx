@@ -8,7 +8,8 @@ const initialStateToken = localStorage.getItem('token') || null;
 
 const UserProvider = ({ children }) => {
   const [token, setToken] = useState(initialStateToken);
-  const [user, setUser] = '';
+  const [login, setLogin] = useState({email: 'user@portalservicios', password: '123456'});
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     if (token) {
@@ -25,9 +26,9 @@ const UserProvider = ({ children }) => {
       body: JSON.stringify({ email, password }),
     });
     const data = await response.json();
-    // setUser(data.user || null);
-    // setToken(data.token || null);
-    console.log(data);
+    setUser(data.user || null);
+    setToken(data.token || null);
+
   };
 
   const registerUsuario = async (nombre, email, contraseña, ciudad, comuna) => {
@@ -50,7 +51,7 @@ const UserProvider = ({ children }) => {
         loginUsuario,
         registerUsuario,
         token,
-        user,
+        login,
         logout,
       }}
     >

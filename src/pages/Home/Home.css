@@ -1,9 +1,4 @@
-.home {
-    min-height: calc(100vh - 75px);
-}
-
 .home article {
-    width: 80%;
     padding-top: 2rem;
     padding-bottom: 2rem;
 }

@@ -15,7 +15,7 @@ const Navigation = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav" className="justify-content-end">
-          <Nav>
+          <Nav className="align-items-end align-items-md-center">
             <NavLink className={({isActive})=> isActive? 'link active' : 'link' } to={"/"}>
               Home
             </NavLink>

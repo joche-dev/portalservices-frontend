@@ -1,6 +1,7 @@
+import { Container } from "react-bootstrap"
 
 export default function Services() {
   return (
-    <div>Services</div>
+    <Container>Services</Container>
   )
 }
