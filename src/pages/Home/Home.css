@@ -1,0 +1,32 @@
+.home {
+    min-height: calc(100vh - 75px);
+}
+
+.home article {
+    width: 80%;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.home article img {
+    background-color: grey;
+    height: 20rem;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.card-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: .7rem;
+    margin-bottom: .5rem;
+}
+
+.card button {
+    font-size: .7rem;
+    padding: .1rem .3rem;
+}
