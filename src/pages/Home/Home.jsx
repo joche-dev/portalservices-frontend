@@ -7,7 +7,7 @@ import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 export default function Home() {
   return (
     <Container className="home">
-      <article className="d-flex flex-column flex-md-row mx-auto">
+      <article className="d-flex flex-column flex-md-row align-items-md-center mx-auto">
         <div className="d-flex flex-column justify-content-center w-100 w-md-50 p-3">
           <h1 className="fw-bolder">
             Aquí podras encontrar todo tipo de servicios
