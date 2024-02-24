@@ -1,6 +1,6 @@
 import { NavLink, Link } from "react-router-dom";
 import { Container, Navbar, Nav, Button } from 'react-bootstrap';
-import Logo from "./Logo";
+import Logo from "../assets/Logo";
 
 const Navigation = () => {
   
@@ -9,7 +9,7 @@ const Navigation = () => {
       <Container>
         <Navbar.Brand>
           <Link to="/" className="logo">
-          <Logo />
+          <Logo w={"60"}/>
             Portal de Servicios
           </Link>
         </Navbar.Brand>
