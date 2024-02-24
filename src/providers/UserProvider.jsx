@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
-// import 'dotenv/config';
+import { dataPublicaciones } from './Data';
 
 export const UserContext = createContext();
 
@@ -10,6 +10,7 @@ const UserProvider = ({ children }) => {
   const [token, setToken] = useState(initialStateToken);
   const [login, setLogin] = useState({email: 'user@portalservicios', password: '123456'});
   const [user, setUser] = useState({});
+  const [publicaciones, setPublicaciones] = useState(dataPublicaciones)
 
   useEffect(() => {
     if (token) {
@@ -53,6 +54,7 @@ const UserProvider = ({ children }) => {
         token,
         login,
         logout,
+        publicaciones
       }}
     >
       {children}
