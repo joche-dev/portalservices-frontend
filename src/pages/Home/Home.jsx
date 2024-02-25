@@ -1,15 +1,13 @@
 import './Home.css';
-import IconGeolocation from '../../assets/IconGeolocation.jsx';
 
 import { useContext } from 'react';
 import { UserContext } from '../../providers/UserProvider.jsx';
 import { Link } from 'react-router-dom';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-
+import { Container, Row, Col, Button } from 'react-bootstrap';
+import CardServicio from '../../components/CardServicio.jsx';
 
 export default function Home() {
-  const {publicaciones} = useContext(UserContext);
-  console.log(publicaciones);
+  const { publicaciones } = useContext(UserContext);
 
   return (
     <Container className="home">
@@ -33,25 +31,9 @@ export default function Home() {
         <h1 className="">Últimos servicios subidos</h1>
         <p>Ingresa tu servicio o la de un vecino!</p>
         <Row xs={1} md={2} lg={3} className="g-4">
-          {publicaciones.slice(-3).map((publicacion, idx) => (
-            <Col key={idx}>
-              <Card>
-                <Card.Img variant="top" src="" />
-                <Card.Body>
-                  <Card.Title>{publicacion.titulo}</Card.Title>
-                  <Card.Text>{publicacion.tiposervicio}</Card.Text>
-                  <Card.Text>{publicacion.contenido}</Card.Text>
-                  <Card.Text>
-                    <span className="d-flex align-items-center">
-                      <IconGeolocation />
-                      {publicacion.comuna}, {publicacion.ciudad}
-                    </span>
-                    <Button variant="outline-secondary ms-2" size="sm">
-                      Más detalles
-                    </Button>
-                  </Card.Text>
-                </Card.Body>
-              </Card>
+          {publicaciones.slice(-3).map((publicacion, id) => (
+            <Col key={id}>
+              <CardServicio publicacion={publicacion} />
             </Col>
           ))}
         </Row>
