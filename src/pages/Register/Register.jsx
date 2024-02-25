@@ -12,7 +12,23 @@ export default function Register() {
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState('');
   const [user, setUser] = useState({});
+  const [isLoading, setLoading] = useState(false);
   const form = useRef();
+  
+  //useEffect boton loading
+  useEffect(() => {
+    function simulateNetworkRequest() {
+      return new Promise((resolve) => setTimeout(resolve, 2000));
+    }
+
+    if (isLoading) {
+      simulateNetworkRequest().then(() => {
+        setLoading(false);
+      });
+    }
+  }, [isLoading]);
+
+  const handleClick = () => setLoading(true);
 
   function inputHandler(e) {
     e.preventDefault();
@@ -69,13 +85,15 @@ export default function Register() {
           <Form.Group className="mb-3" controlId="formGroupPassword1">
             <Form.Control type="password" placeholder="Confirmar Password" onChange={(e) => inputHandler(e)} required/>
           </Form.Group>
-          <Button type='submit' variant="dark">registrarse</Button>
+          <Button type='submit' variant="dark" size="sm" disabled={isLoading} onClick={!isLoading ? handleClick : null}>
+            {isLoading ? 'Loading…' : 'Registrarse'}
+          </Button>
         </Form>
         
         <p>
           ¿Ya tienes una cuenta? 
           <Link to={"/login"}>
-            <Button variant="light">Iniciar sesión</Button>
+            <Button variant="outline-secondary ms-2" size="sm">Iniciar sesión</Button>
             </Link> 
           </p>
           <Alert message={error} success={success} confirm={message} />

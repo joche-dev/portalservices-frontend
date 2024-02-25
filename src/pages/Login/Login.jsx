@@ -12,7 +12,24 @@ export default function Login() {
   const [message, setMessage] = useState('');
   const form = useRef();
   const [user, setUser] = useState({});
+  const [isLoading, setLoading] = useState(false);
 
+  //useEffect boton loading
+  useEffect(() => {
+    function simulateNetworkRequest() {
+      return new Promise((resolve) => setTimeout(resolve, 2000));
+    }
+
+    if (isLoading) {
+      simulateNetworkRequest().then(() => {
+        setLoading(false);
+      });
+    }
+  }, [isLoading]);
+
+  const handleClick = () => setLoading(true);
+
+  //useEffect Alert
   useEffect(() => {
     let timer;
     if (error || success) {
@@ -59,10 +76,12 @@ export default function Login() {
           <Form.Group className="mb-3" controlId="formGroupPassword">
             <Form.Control type="password" placeholder="Password" onChange={(e) => inputHandler(e)} className='w-100' required/>
           </Form.Group>
-          <Button type='submit' variant="dark">Iniciar sesion</Button>
+          <Button type='submit' variant="dark" size="sm" disabled={isLoading} onClick={!isLoading ? handleClick : null}>
+            {isLoading ? 'Loading…' : 'Iniciar sesión'}
+          </Button>
         </Form>
-          <p>
-            ¿No tiene una cuenta? <Link to={"/register"}><Button variant="light">Unete a nosotros</Button> </Link>
+          <p className='mt-1'>
+            ¿No tiene una cuenta? <Link to={"/register"}><Button variant="outline-secondary ms-2" size="sm">Únete a nosotros</Button> </Link>
           </p>
           <Alert message={error} success={success} confirm={message} />
       </div>
