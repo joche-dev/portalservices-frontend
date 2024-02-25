@@ -1,5 +1,7 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
 #root {
-  max-width: 1028px;
+  max-width: 1280px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -33,9 +35,13 @@
   border-bottom: 2px solid #003049;
 }
 
+.card {
+  height: 20rem;
+}
+
 .card img {
   background-color: grey;
-  height: 15rem;
+  height: 12rem;
 }
 
 .footer {
