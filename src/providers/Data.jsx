@@ -1,7 +1,7 @@
 export const dataPublicaciones = [
     {
-      publicacionid: 1,
-      usuarioid: 101,
+      publicacionId: 1,
+      usuarioId: 101,
       titulo: "Servicio de electricidad",
       contenido: "Ofrezco servicios eléctricos de alta calidad",
       imagen: "imagen1.jpg",
@@ -14,8 +14,8 @@ export const dataPublicaciones = [
       likes: 15,
     },
     {
-      publicacionid: 2,
-      usuarioid: 102,
+      publicacionId: 2,
+      usuarioId: 102,
       titulo: "Reparación de fontanería",
       contenido: "Especializado en reparaciones de fontanería",
       imagen: "imagen2.jpg",
@@ -28,8 +28,8 @@ export const dataPublicaciones = [
       likes: 20,
     },
     {
-      publicacionid: 3,
-      usuarioid: 103,
+      publicacionId: 3,
+      usuarioId: 103,
       titulo: "Instalación de gas",
       contenido: "Servicio de instalación y reparación de gas",
       imagen: "imagen3.jpg",
@@ -42,8 +42,8 @@ export const dataPublicaciones = [
       likes: 12,
     },
     {
-      publicacionid: 4,
-      usuarioid: 104,
+      publicacionId: 4,
+      usuarioId: 104,
       titulo: "Reparación de electrodomésticos",
       contenido: "Experto en reparación de electrodomésticos",
       imagen: "imagen4.jpg",
@@ -56,8 +56,8 @@ export const dataPublicaciones = [
       likes: 18,
     },
     {
-      publicacionid: 5,
-      usuarioid: 105,
+      publicacionId: 5,
+      usuarioId: 105,
       titulo: "Mantenimiento de calefacción",
       contenido: "Ofrezco servicios de mantenimiento de calefacción",
       imagen: "imagen5.jpg",
@@ -70,8 +70,8 @@ export const dataPublicaciones = [
       likes: 25,
     },
     {
-      publicacionid: 6,
-      usuarioid: 106,
+      publicacionId: 6,
+      usuarioId: 106,
       titulo: "Construcción y remodelación",
       contenido: "Realizo trabajos de construcción y remodelación",
       imagen: "imagen6.jpg",
@@ -84,8 +84,8 @@ export const dataPublicaciones = [
       likes: 22,
     },
     {
-      publicacionid: 7,
-      usuarioid: 107,
+      publicacionId: 7,
+      usuarioId: 107,
       titulo: "Pintura y decoración",
       contenido: "Servicio de pintura y decoración de interiores",
       imagen: "imagen7.jpg",
@@ -98,8 +98,8 @@ export const dataPublicaciones = [
       likes: 17,
     },
     {
-      publicacionid: 8,
-      usuarioid: 108,
+      publicacionId: 8,
+      usuarioId: 108,
       titulo: "Servicio de jardinería",
       contenido: "Mantenimiento de jardines y diseño paisajístico",
       imagen: "imagen8.jpg",
@@ -112,8 +112,8 @@ export const dataPublicaciones = [
       likes: 14,
     },
     {
-      publicacionid: 9,
-      usuarioid: 109,
+      publicacionId: 9,
+      usuarioId: 109,
       titulo: "Reparación de computadoras",
       contenido: "Especializado en reparación de computadoras",
       imagen: "imagen9.jpg",
@@ -126,8 +126,8 @@ export const dataPublicaciones = [
       likes: 19,
     },
     {
-      publicacionid: 10,
-      usuarioid: 110,
+      publicacionId: 10,
+      usuarioId: 110,
       titulo: "Servicio de limpieza",
       contenido: "Limpieza profunda para hogares y oficinas",
       imagen: "imagen10.jpg",
