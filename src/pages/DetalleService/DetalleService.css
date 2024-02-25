@@ -1,0 +1,8 @@
+.cardDetail{
+    width: 40rem;
+    height: 50rem;
+    display: flex;
+    flex-direction: row;
+    padding-top: 1rem;
+    justify-content: center;
+  }
