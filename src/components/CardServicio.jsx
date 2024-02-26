@@ -5,7 +5,7 @@ export default function CardServicio({ publicacion }) {
   const navigate = useNavigate();
 
   return (
-    <Card>
+    <Card className='card-mini'>
       <Card.Img variant="top" src={publicacion.imagen} />
       <Card.Body className="p-2">
         <Card.Title className="text-center">{publicacion.titulo}</Card.Title>
