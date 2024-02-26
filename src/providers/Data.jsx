@@ -10,7 +10,7 @@ export const dataPublicaciones = [
       telefonocontacto: "+56 9 1234 5678",
       ciudad: "Santiago",
       comuna: "Providencia",
-      fechapublicacion: new Date("2024-02-24"),
+      fechapublicacion: "2024-02-24",
       likes: 15,
     },
     {
@@ -24,7 +24,7 @@ export const dataPublicaciones = [
       telefonocontacto: "+56 9 9876 5432",
       ciudad: "Concepción",
       comuna: "Talcahuano",
-      fechapublicacion: new Date("2024-02-23"),
+      fechapublicacion:"2024-02-23",
       likes: 20,
     },
     {
@@ -38,7 +38,7 @@ export const dataPublicaciones = [
       telefonocontacto: "+56 9 5555 5555",
       ciudad: "Valparaíso",
       comuna: "Viña del Mar",
-      fechapublicacion: new Date("2024-02-22"),
+      fechapublicacion: "2024-02-22",
       likes: 12,
     },
     {
@@ -52,7 +52,7 @@ export const dataPublicaciones = [
       telefonocontacto: "+56 9 1111 2222",
       ciudad: "Antofagasta",
       comuna: "Calama",
-      fechapublicacion: new Date("2024-02-21"),
+      fechapublicacion: "2024-02-21",
       likes: 18,
     },
     {
@@ -66,7 +66,7 @@ export const dataPublicaciones = [
       telefonocontacto: "+56 9 9999 8888",
       ciudad: "Temuco",
       comuna: "Padre Las Casas",
-      fechapublicacion: new Date("2024-02-20"),
+      fechapublicacion: "2024-02-20",
       likes: 25,
     },
     {
@@ -80,7 +80,7 @@ export const dataPublicaciones = [
       telefonocontacto: "+56 9 3333 4444",
       ciudad: "Rancagua",
       comuna: "Machalí",
-      fechapublicacion: new Date("2024-02-19"),
+      fechapublicacion: "2024-02-19",
       likes: 22,
     },
     {
@@ -94,7 +94,7 @@ export const dataPublicaciones = [
       telefonocontacto: "+56 9 7777 6666",
       ciudad: "Iquique",
       comuna: "Alto Hospicio",
-      fechapublicacion: new Date("2024-02-18"),
+      fechapublicacion: "2024-02-18",
       likes: 17,
     },
     {
@@ -108,7 +108,7 @@ export const dataPublicaciones = [
       telefonocontacto: "+56 9 8888 9999",
       ciudad: "La Serena",
       comuna: "Coquimbo",
-      fechapublicacion: new Date("2024-02-17"),
+      fechapublicacion: "2024-02-17",
       likes: 14,
     },
     // {
@@ -122,7 +122,7 @@ export const dataPublicaciones = [
     //   telefonocontacto: "+56 9 6666 7777",
     //   ciudad: "Puerto Montt",
     //   comuna: "Puerto Varas",
-    //   fechapublicacion: new Date("2024-02-16"),
+    //   fechapublicacion: "2024-02-16",
     //   likes: 19,
     // },
     // {
@@ -136,7 +136,7 @@ export const dataPublicaciones = [
     //   telefonocontacto: "+56 9 4444 3333",
     //   ciudad: "Arica",
     //   comuna: "Putre",
-    //   fechapublicacion: new Date("2024-02-15"),
+    //   fechapublicacion: "2024-02-15",
     //   likes: 16,
     // },
   ];

@@ -1,8 +1,10 @@
-.cardDetail{
-    width: 40rem;
-    height: 50rem;
-    display: flex;
-    flex-direction: row;
-    padding-top: 1rem;
-    justify-content: center;
-  }
+.card-date {
+  font-size: .9rem;
+  min-width: fit-content
+}
+
+.detalle-contacto {
+  display: flex;
+  flex-direction: column;
+  font-size: .9rem;
+}

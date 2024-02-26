@@ -1,8 +1,5 @@
 import { Container } from 'react-bootstrap';
 import Logo from '../assets/Logo.jsx';
-import IconFacebook from '../assets/IconFacebook.jsx';
-import IconLinkedin from '../assets/IconLinkedin.jsx'
-import IconYoutube from '../assets/IconYoutube.jsx'
 
 export default function Footer() {
   return (
@@ -13,9 +10,9 @@ export default function Footer() {
       </h5>
       <span>contacto@portalservicios.com</span>
       <span className='social-icon'>
-        <IconFacebook />
-        <IconLinkedin />
-        <IconYoutube />
+        <i class="bi bi-whatsapp"></i>
+        <i class="bi bi-facebook"></i>
+        <i class="bi bi-linkedin"></i>
       </span>
     </Container>
   );
