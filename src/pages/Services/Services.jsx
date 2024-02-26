@@ -10,7 +10,7 @@ export default function Services() {
     <Container className="py-4">
       <h1 className="text-center mb-3">Encuentra lo que necesitas</h1>
       <Row className="mb-3">
-        <Col xs={12} md={6}>
+        <Col xs={12} md={6} className='mb-3 mb-md-0'>
           <Form.Floating>
             <Form.Control
               id="inputTituloEspecialidad"
@@ -22,7 +22,7 @@ export default function Services() {
             </label>
           </Form.Floating>
         </Col>
-        <Col xs={12} md={3}>
+        <Col xs={12} md={3} className='mb-3 mb-md-0'>
           <Form.Floating>
             <Form.Control id="inputCiudad" type="text" placeholder="" />
             <label htmlFor="inputCiudad">
@@ -30,7 +30,7 @@ export default function Services() {
             </label>
           </Form.Floating>
         </Col>
-        <Col xs={12} md={3}>
+        <Col xs={12} md={3} className='mb-3 mb-md-0'>
           <Form.Floating>
             <Form.Control id="inputComuna" type="text" placeholder="" />
             <label htmlFor="inputComuna">

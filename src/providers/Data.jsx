@@ -140,3 +140,39 @@ export const dataPublicaciones = [
     //   likes: 16,
     // },
   ];
+
+export const usuarios = [
+  {
+    usuarioid: 1,
+    nombre: "Juan Pérez",
+    email: "juan@example.com",
+    contraseña: "123456",
+    ciudad: "Santiago",
+    comuna: "Providencia",
+    direccion: "Av. Manuel Montt 123",
+    fotoperfil: "imagen1.jpg",
+    rol: "usuario"
+  },
+  {
+    usuarioid: 2,
+    nombre: "María Gómez",
+    email: "maria@example.com",
+    contraseña: "123456",
+    ciudad: "Valparaíso",
+    comuna: "Viña del Mar",
+    direccion: "Av. España 456",
+    fotoperfil: "imagen2.jpg",
+    rol: "usuario"
+  },
+  {
+    usuarioid: 3,
+    nombre: "Carlos Rodríguez",
+    email: "carlos@example.com",
+    contraseña: "123456",
+    ciudad: "Concepción",
+    comuna: "Talcahuano",
+    direccion: "Calle Colón 789",
+    fotoperfil: "imagen3.jpg",
+    rol: "usuario"
+  }
+]

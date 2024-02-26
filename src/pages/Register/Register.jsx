@@ -63,7 +63,7 @@ export default function Register() {
   return (
     <Row className='w-100 justify-content-center p-3 p-md-5 mx-auto'>
       <Col xs={12} md={6} lg={4} className='text-center'>
-        <h1>Registrarse.</h1>
+        <h1>Registrarse</h1>
         <Form ref={form} action="submit" onSubmit={(e) => submitHandler(e)} className='w-100 text-center'>
           <Form.Floating className="mb-3">
             <Form.Control 
@@ -125,20 +125,16 @@ export default function Register() {
               <i className="bi bi-key"></i> Confirmar Contraseña
             </label>
           </Form.Floating>
-          <Button type='submit' variant="dark" size="sm">
+          <Button type='submit' variant="dark">
             Crear cuenta
           </Button>
         </Form>
-        
-        <p>
-          ¿Ya tienes una cuenta? 
-          <Link to={"/login"}>
-            Iniciar sesión
-            </Link> 
-          </p>
-          <Alert message={error} success={success} confirm={message} />
+        <p className='mt-3'>
+          ¿Ya tienes una cuenta? <Link to={"/login"}>Iniciar sesión</Link> 
+        </p>
+        <Alert message={error} success={success} confirm={message} />
       </Col>
-      <Col xs={12} md={6} lg={4}>
+      <Col xs={12} md={6} lg={4} className='align-self-center'>
         <img src="" alt="" style={{ width:'100%', height:'15rem', backgroundColor: 'gray'}}/>
       </Col>
     </Row>

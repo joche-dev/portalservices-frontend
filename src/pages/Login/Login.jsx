@@ -83,12 +83,12 @@ export default function Login() {
             Iniciar sesión
           </Button>
         </Form>
-          <p className='mt-3'>
-            ¿No tiene una cuenta? <Link to={"/register"}>Únete a nosotros</Link>
-          </p>
-          <Alert message={error} success={success} confirm={message} />
+        <p className='mt-3'>
+          ¿No tiene una cuenta? <Link to={"/register"}>Únete a nosotros</Link>
+        </p>
+        <Alert message={error} success={success} confirm={message} />
       </Col>
-      <Col xs={12} md={6} lg={4}>
+      <Col xs={12} md={6} lg={4} className='align-self-center'>
         <img src="" alt="" style={{ width:'100%', height:'15rem', backgroundColor: 'gray'}}/>
       </Col>
     </Row>
