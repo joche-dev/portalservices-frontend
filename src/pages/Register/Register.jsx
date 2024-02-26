@@ -1,9 +1,8 @@
-import { Container } from 'react-bootstrap';
-import { useState, useRef, useEffect } from 'react';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import { useState, useRef, useEffect, useContext } from 'react';
+import { Row, Col, Button, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Alert from '../../components/Alert';
+import { UserContext } from '../../providers/UserProvider';
 
 export default function Register() {
 
@@ -12,30 +11,28 @@ export default function Register() {
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState('');
   const [user, setUser] = useState({});
-  const [isLoading, setLoading] = useState(false);
   const form = useRef();
+
+    //usamos el context
+    const {registerUsuario} = useContext(UserContext);
   
-  //useEffect boton loading
-  useEffect(() => {
-    function simulateNetworkRequest() {
-      return new Promise((resolve) => setTimeout(resolve, 2000));
-    }
-
-    if (isLoading) {
-      simulateNetworkRequest().then(() => {
-        setLoading(false);
-      });
-    }
-  }, [isLoading]);
-
-  const handleClick = () => setLoading(true);
-
   function inputHandler(e) {
     e.preventDefault();
     setUser({ ...user, [e.target.id]: e.target.value });
   };
+    //useEffect Alert
+    useEffect(() => {
+      let timer;
+      if (error || success) {
+        timer = setTimeout(() => {
+          setError(null);
+          setSuccess(false);
+        }, 3500);
+      }
+      return () => clearTimeout(timer); 
+    }, [error, success]);
 
-  function submitHandler(e) {
+    async function submitHandler(e) {
     e.preventDefault();
 
     setError(null);
@@ -55,7 +52,8 @@ export default function Register() {
       setError('Las contraseñas no coinciden.');
       return;
     }else{
-      setMessage('Registro exitoso!')
+      //await registerUsuario(user.formGroupName, user.formGroupEmail, user.formGroupPassword, user.formGroupCity, user.formGroupComuna );
+      setMessage('Registro exitoso!');
       setSuccess(true);
       form.current.reset();
     }
@@ -63,44 +61,86 @@ export default function Register() {
 
 
   return (
-    <Container className='d-flex justify-content-center gap-5 mt-5 flex-column flex-md-row align-items-md-center mx-auto'>
-      <div className = 'd-flex flex-column align-items-center m-5 gap-2'>
+    <Row className='w-100 justify-content-center p-3 p-md-5 mx-auto'>
+      <Col xs={12} md={6} lg={4} className='text-center'>
         <h1>Registrarse.</h1>
         <Form ref={form} action="submit" onSubmit={(e) => submitHandler(e)} className='w-100 text-center'>
-          <Form.Group className="mb-3" controlId="formGroupName">
-            <Form.Control type="text" placeholder="Nombre completo" onChange={(e) => inputHandler(e)} required/>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formGroupEmail">
-            <Form.Control type="email" placeholder="example@example.com" onChange={(e) => inputHandler(e)} required/>
-          </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupCity">
-            <Form.Control type="text" placeholder="Ciudad" onChange={(e) => inputHandler(e)} required/>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formGroupComuna">
-            <Form.Control type="text" placeholder="Comuna" onChange={(e) => inputHandler(e)} required/>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formGroupPassword">
-            <Form.Control type="password" placeholder="Password" onChange={(e) => inputHandler(e)} required/>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formGroupPassword1">
-            <Form.Control type="password" placeholder="Confirmar Password" onChange={(e) => inputHandler(e)} required/>
-          </Form.Group>
-          <Button type='submit' variant="dark" size="sm" disabled={isLoading} onClick={!isLoading ? handleClick : null}>
-            {isLoading ? 'Loading…' : 'Registrarse'}
+          <Form.Floating className="mb-3">
+            <Form.Control 
+              id="formGroupName"
+              type="text" 
+              placeholder="Nombre completo" 
+              onChange={(e) => inputHandler(e)} />
+            <label htmlFor="formGroupName">
+              <i className="bi bi-person"></i> Nombre completo
+            </label>
+          </Form.Floating>
+          <Form.Floating className="mb-3" >
+            <Form.Control 
+              type="email" 
+              id="formGroupEmail" 
+              placeholder="example@example.com" 
+              onChange={(e) => inputHandler(e)} />
+            <label htmlFor="formGroupEmail">
+              <i className="bi bi-envelope"></i> Correo electrónico
+            </label>
+          </Form.Floating>
+            <Form.Floating className="mb-3" >
+            <Form.Control 
+              type="text" 
+              id="formGroupCity" 
+              placeholder="Ciudad" 
+              onChange={(e) => inputHandler(e)} />
+            <label htmlFor="formGroupCity">
+              <i className="bi bi-geo-alt"></i> Ciudad
+            </label>
+          </Form.Floating>
+          <Form.Floating className="mb-3" >
+            <Form.Control 
+              type="text" 
+              id="formGroupComuna" 
+              placeholder="Comuna" 
+              onChange={(e) => inputHandler(e)} />
+            <label htmlFor="formGroupComuna">
+              <i className="bi bi-geo-alt"></i> Comuna
+            </label>
+          </Form.Floating>
+          <Form.Floating className="mb-3">
+            <Form.Control 
+              type="password" 
+              id="formGroupPassword" 
+              placeholder="Password" 
+              onChange={(e) => inputHandler(e)}/>
+            <label htmlFor="formGroupPassword">
+              <i className="bi bi-key"></i> Contraseña
+            </label>
+          </Form.Floating>
+          <Form.Floating className="mb-3" >
+            <Form.Control 
+              type="password" 
+              id="formGroupPassword1" 
+              placeholder="Confirmar Password" 
+              onChange={(e) => inputHandler(e)}/>
+            <label htmlFor="formGroupPassword1">
+              <i className="bi bi-key"></i> Confirmar Contraseña
+            </label>
+          </Form.Floating>
+          <Button type='submit' variant="dark" size="sm">
+            Crear cuenta
           </Button>
         </Form>
         
         <p>
           ¿Ya tienes una cuenta? 
           <Link to={"/login"}>
-            <Button variant="outline-secondary ms-2" size="sm">Iniciar sesión</Button>
+            Iniciar sesión
             </Link> 
           </p>
           <Alert message={error} success={success} confirm={message} />
-      </div>
-      <div className='d-flex justify-content-center align-items-center'>
-        <img src="" alt="" style={{width:'15rem', backgroundColor: 'gray', height:'15rem'}}/>
-      </div>
-    </Container>
+      </Col>
+      <Col xs={12} md={6} lg={4}>
+        <img src="" alt="" style={{ width:'100%', height:'15rem', backgroundColor: 'gray'}}/>
+      </Col>
+    </Row>
   )
 }
