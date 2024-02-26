@@ -1,9 +1,8 @@
-import { useState, useRef, useEffect } from 'react';
-import { Row, Col } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import { useState, useRef, useEffect, useContext } from 'react';
+import { Row, Col, Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Alert from '../../components/Alert';
+import { UserContext } from '../../providers/UserProvider';
 
 export default function Login() {
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -12,22 +11,9 @@ export default function Login() {
   const [message, setMessage] = useState('');
   const form = useRef();
   const [user, setUser] = useState({});
-  const [isLoading, setLoading] = useState(false);
 
-  //useEffect boton loading
-  useEffect(() => {
-    function simulateNetworkRequest() {
-      return new Promise((resolve) => setTimeout(resolve, 2000));
-    }
-
-    if (isLoading) {
-      simulateNetworkRequest().then(() => {
-        setLoading(false);
-      });
-    }
-  }, [isLoading]);
-
-  const handleClick = () => setLoading(true);
+  //usamos el context
+  const { loginUsuario } = useContext(UserContext);
 
   //useEffect Alert
   useEffect(() => {
@@ -46,7 +32,7 @@ export default function Login() {
     setUser({ ...user, [e.target.id]: e.target.value });
   };
 
-  function submitHandler(e) {
+  async function submitHandler(e) {
     e.preventDefault();
 
     setError(null);
@@ -60,6 +46,7 @@ export default function Login() {
       setError('Por favor, introduce una dirección de correo electrónico válida.');
       return;
     }else{
+      //await loginUsuario(user.formGroupEmail, user.formGroupPassword);
       setMessage('inicio de sesión exitoso!')
       setSuccess(true);
       form.current.reset();
@@ -70,14 +57,30 @@ export default function Login() {
       <Col xs={12} md={6} lg={4} className='text-center'>
         <h1>Iniciar sesión</h1>
         <Form ref={form} action="submit" onSubmit={(e) => submitHandler(e)} className='w-100 text-center'>
-          <Form.Group className="mb-3" controlId="formGroupEmail">
-            <Form.Control type="email" placeholder="example@example.com" onChange={(e) => inputHandler(e)}  className='w-100' required/>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formGroupPassword">
-            <Form.Control type="password" placeholder="Password" onChange={(e) => inputHandler(e)} className='w-100' required/>
-          </Form.Group>
-          <Button type='submit' variant="dark" disabled={isLoading} onClick={!isLoading ? handleClick : null}>
-            {isLoading ? 'Loading…' : 'Iniciar sesión'}
+          <Form.Floating className="mb-3" >
+            <Form.Control 
+              type="email" 
+              id="formGroupEmail" 
+              placeholder="example@example.com" 
+              onChange={(e) => inputHandler(e)}  
+              className='w-100'/>
+            <label htmlFor="formGroupEmail">
+              <i className="bi bi-envelope"></i> Correo electrónico
+            </label>
+          </Form.Floating>
+          <Form.Floating className="mb-3">
+            <Form.Control 
+              type="password" 
+              id="formGroupPassword" 
+              placeholder="Password" 
+              onChange={(e) => inputHandler(e)} 
+              className='w-100'/>
+            <label htmlFor="formGroupPassword">
+              <i className="bi bi-key"></i> Contraseña
+            </label>
+          </Form.Floating>
+          <Button type='submit' variant="dark">
+            Iniciar sesión
           </Button>
         </Form>
           <p className='mt-3'>
@@ -89,6 +92,5 @@ export default function Login() {
         <img src="" alt="" style={{ width:'100%', height:'15rem', backgroundColor: 'gray'}}/>
       </Col>
     </Row>
-    
   )
 }
