@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Container } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Link } from 'react-router-dom';
@@ -52,7 +52,7 @@ export default function Login() {
     setError(null);
     setSuccess(false); 
 
-    //verificar si los camos estan completados
+    //verificar si los campos estan completados
     if(!user?.formGroupEmail || !user?.formGroupPassword){
       setError('Faltan campos obligatorios por llenar.');
       return;
@@ -66,9 +66,9 @@ export default function Login() {
     }
   }
   return (
-    <Container className='d-flex justify-content-center gap-5 mt-5 flex-column flex-md-row align-items-md-center mx-auto'>
-      <div className = 'd-flex flex-column align-items-center m-5 gap-2 justify-content-md-center'>
-        <h1>Inicio de sesión.</h1>
+    <Row className='w-100 justify-content-center p-3 p-md-5 mx-auto'>
+      <Col xs={12} md={6} lg={4} className='text-center'>
+        <h1>Iniciar sesión</h1>
         <Form ref={form} action="submit" onSubmit={(e) => submitHandler(e)} className='w-100 text-center'>
           <Form.Group className="mb-3" controlId="formGroupEmail">
             <Form.Control type="email" placeholder="example@example.com" onChange={(e) => inputHandler(e)}  className='w-100' required/>
@@ -76,19 +76,19 @@ export default function Login() {
           <Form.Group className="mb-3" controlId="formGroupPassword">
             <Form.Control type="password" placeholder="Password" onChange={(e) => inputHandler(e)} className='w-100' required/>
           </Form.Group>
-          <Button type='submit' variant="dark" size="sm" disabled={isLoading} onClick={!isLoading ? handleClick : null}>
+          <Button type='submit' variant="dark" disabled={isLoading} onClick={!isLoading ? handleClick : null}>
             {isLoading ? 'Loading…' : 'Iniciar sesión'}
           </Button>
         </Form>
-          <p className='mt-1'>
-            ¿No tiene una cuenta? <Link to={"/register"}><Button variant="outline-secondary ms-2" size="sm">Únete a nosotros</Button> </Link>
+          <p className='mt-3'>
+            ¿No tiene una cuenta? <Link to={"/register"}>Únete a nosotros</Link>
           </p>
           <Alert message={error} success={success} confirm={message} />
-      </div>
-      <div className='d-flex justify-content-center' >
-        <img src="" alt="" style={{width:'15rem', backgroundColor: 'gray', height:'15rem'}}/>
-      </div>
-    </Container>
+      </Col>
+      <Col xs={12} md={6} lg={4}>
+        <img src="" alt="" style={{ width:'100%', height:'15rem', backgroundColor: 'gray'}}/>
+      </Col>
+    </Row>
     
   )
 }

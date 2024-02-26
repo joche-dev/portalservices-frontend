@@ -1,5 +1,4 @@
 import { Card, Button } from 'react-bootstrap';
-import IconGeolocation from '../assets/IconGeolocation';
 import { useNavigate } from 'react-router-dom';
 
 export default function CardServicio({ publicacion }) {
@@ -7,7 +6,7 @@ export default function CardServicio({ publicacion }) {
 
   return (
     <Card>
-      <Card.Img variant="top" src="" />
+      <Card.Img variant="top" src={publicacion.imagen} />
       <Card.Body className="p-2">
         <Card.Title className="text-center">{publicacion.titulo}</Card.Title>
         <Card.Text>{publicacion.tiposervicio}</Card.Text>
