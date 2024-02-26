@@ -14,7 +14,7 @@ export default function CardServicio({ publicacion }) {
       </Card.Body>
       <Card.Text className="card-footer">
         <span className="d-flex align-items-center">
-          <i class="bi bi-geo-alt-fill"></i>
+          <i className="bi bi-geo-alt-fill"></i>
           {publicacion.comuna}, {publicacion.ciudad}
         </span>
         <Button

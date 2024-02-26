@@ -1,15 +1,6 @@
 import { useContext } from 'react';
 import { UserContext } from '../../providers/UserProvider.jsx';
-import IconGeolocation from '../../assets/IconGeolocation.jsx';
-import {
-  Container,
-  Form,
-  FloatingLabel,
-  InputGroup,
-  Row,
-  Col,
-} from 'react-bootstrap';
-import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Container, Form, Row, Col } from 'react-bootstrap';
 import CardServicio from '../../components/CardServicio.jsx';
 
 export default function Services() {
