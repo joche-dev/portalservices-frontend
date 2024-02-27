@@ -7,6 +7,7 @@ import { UserContext } from '../../providers/UserProvider';
 export default function Register() {
 
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  const passwordPattern = /^.{6,}$/;
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState('');
@@ -39,21 +40,24 @@ export default function Register() {
     setSuccess(false); 
 
     //verificar si los camos estan completados
-    if(!user?.formGroupEmail || !user?.formGroupPassword || !user?.formGroupPassword1 || !user?.formGroupCity || !user?.formGroupComuna || !user?.formGroupName ){
+    if(!user?.Email || !user?.Password || !user?.Password1 || !user?.City || !user?.Comuna || !user?.Name ){
       setError('Faltan campos obligatorios por llenar.');
       return;
-    } else if (!emailPattern.test(user.formGroupEmail)) {     // verificar el correo 
+    } else if (!emailPattern.test(user.Email)) {     // verificar el correo 
       setError('Por favor, introduce una dirección de correo electrónico válida.');
       return;
-    }else if (!user.formGroupPassword || !user.formGroupPassword1) {  // verificar que los campos no esten vacios
+    } else if (!passwordPattern.test(user.Password)) {     // verificar el correo 
+      setError('Por favor, introduce una contraseña de minimo 6 caracteres.');
+      return;
+    }else if (!user.Password || !user.Password1) {  // verificar que los campos no esten vacios
       setError('Por favor, ingresa una contraseña.');
       return;
-    } else if (user.formGroupPassword !== user.formGroupPassword1) { // verificar contraseñas iguales 
+    } else if (user.Password !== user.Password1) { // verificar contraseñas iguales 
       setError('Las contraseñas no coinciden.');
       return;
     }else{
       console.log(user);
-      //await registerUsuario(user.formGroupName, user.formGroupEmail, user.formGroupPassword, user.formGroupCity, user.formGroupComuna );
+      //await registerUsuario(user.Name, user.Email, user.Password, user.City, user.Comuna );
       setMessage('Registro exitoso!');
       setSuccess(true);
       form.current.reset();
@@ -68,61 +72,61 @@ export default function Register() {
         <Form ref={form} action="submit" onSubmit={(e) => submitHandler(e)} className='w-100 text-center'>
           <Form.Floating className="mb-3">
             <Form.Control 
-              id="formGroupName"
+              id="Name"
               type="text" 
               placeholder="Nombre completo" 
               onChange={(e) => inputHandler(e)} />
-            <label htmlFor="formGroupName">
+            <label htmlFor="Name">
               <i className="bi bi-person"></i> Nombre completo
             </label>
           </Form.Floating>
           <Form.Floating className="mb-3" >
             <Form.Control 
               type="email" 
-              id="formGroupEmail" 
+              id="Email" 
               placeholder="example@example.com" 
               onChange={(e) => inputHandler(e)} />
-            <label htmlFor="formGroupEmail">
+            <label htmlFor="Email">
               <i className="bi bi-envelope"></i> Correo electrónico
             </label>
           </Form.Floating>
             <Form.Floating className="mb-3" >
             <Form.Control 
               type="text" 
-              id="formGroupCity" 
+              id="City" 
               placeholder="Ciudad" 
               onChange={(e) => inputHandler(e)} />
-            <label htmlFor="formGroupCity">
+            <label htmlFor="City">
               <i className="bi bi-geo-alt"></i> Ciudad
             </label>
           </Form.Floating>
           <Form.Floating className="mb-3" >
             <Form.Control 
               type="text" 
-              id="formGroupComuna" 
+              id="Comuna" 
               placeholder="Comuna" 
               onChange={(e) => inputHandler(e)} />
-            <label htmlFor="formGroupComuna">
+            <label htmlFor="Comuna">
               <i className="bi bi-geo-alt"></i> Comuna
             </label>
           </Form.Floating>
           <Form.Floating className="mb-3">
             <Form.Control 
               type="password" 
-              id="formGroupPassword" 
+              id="Password" 
               placeholder="Password" 
               onChange={(e) => inputHandler(e)}/>
-            <label htmlFor="formGroupPassword">
+            <label htmlFor="Password">
               <i className="bi bi-key"></i> Contraseña
             </label>
           </Form.Floating>
           <Form.Floating className="mb-3" >
             <Form.Control 
               type="password" 
-              id="formGroupPassword1" 
+              id="Password1" 
               placeholder="Confirmar Password" 
               onChange={(e) => inputHandler(e)}/>
-            <label htmlFor="formGroupPassword1">
+            <label htmlFor="Password1">
               <i className="bi bi-key"></i> Confirmar Contraseña
             </label>
           </Form.Floating>
