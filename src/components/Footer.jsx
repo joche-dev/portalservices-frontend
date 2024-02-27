@@ -10,9 +10,9 @@ export default function Footer() {
       </h5>
       <span>contacto@portalservicios.com</span>
       <span className='social-icon'>
-        <i class="bi bi-whatsapp"></i>
-        <i class="bi bi-facebook"></i>
-        <i class="bi bi-linkedin"></i>
+        <i className="bi bi-whatsapp"></i>
+        <i className="bi bi-facebook"></i>
+        <i className="bi bi-linkedin"></i>
       </span>
     </Container>
   );
