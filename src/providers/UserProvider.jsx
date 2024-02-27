@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
 import { dataPublicaciones, dataUsuarios } from './Data';
 
-
 export const UserContext = createContext();
 
 const URL_BASE = 'http://localhost:5000/users';
@@ -10,7 +9,7 @@ const initialStateToken = localStorage.getItem('token') || null;
 const UserProvider = ({ children }) => {
   const [token, setToken] = useState(initialStateToken);
   const [userLogin, setUserLogin] = useState({});
-  const [publicaciones, setPublicaciones] = useState(dataPublicaciones)
+  const [publicaciones, setPublicaciones] = useState(dataPublicaciones);
 
   useEffect(() => {
     if (token) {
@@ -29,20 +28,41 @@ const UserProvider = ({ children }) => {
     // const data = await response.json();
     // setUserLogin(data.usuario || null);
     // setToken(data.token || null);
-    const [data] = dataUsuarios.filter(usuario => usuario.email === email && usuario.contraseña === password)
-    setUserLogin(data || null);
+    const data = dataUsuarios.find(
+      ({ usuario }) =>
+        usuario.email === email && usuario.contraseña === password
+    );
+    setToken(data.token || null);
+    setUserLogin(data.usuario || null);
 
-    return data
+    return data;
   };
 
-  const registerUsuario = async (nombre, email, contraseña, ciudad, comuna) => {
-    const response = await fetch(`${URL_BASE}/register`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nombre, email, contraseña, ciudad, comuna }),
+  const registerUsuario = async (userRegister) => {
+    // const response = await fetch(`${URL_BASE}/register`, {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ nombre, email, contraseña, ciudad, comuna }),
+    // });
+    // const data = await response.json();
+    const data = dataUsuarios.find(
+      ({ usuario }) => usuario.email === userRegister.email
+    );
+    if (data) {
+      return false;
+    }
+
+    dataUsuarios.push({
+      token: '123',
+      usuario: {
+        ...userRegister,
+        direccion: '',
+        fotoperfil: '',
+        rol: 'usuario',
+      },
     });
-    const data = await response.json();
-    return data;
+
+    return true;
   };
 
   const logout = () => {
@@ -57,7 +77,7 @@ const UserProvider = ({ children }) => {
         token,
         userLogin,
         logout,
-        publicaciones
+        publicaciones,
       }}
     >
       {children}

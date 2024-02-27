@@ -13,9 +13,13 @@ import Login from './pages/Login/Login.jsx';
 import Register from './pages/Register/Register.jsx';
 import Services from './pages/Services/Services.jsx';
 import DetalleService from './pages/DetalleService/DetalleService.jsx';
+import Perfil from './pages/Perfil/Perfil.jsx';
+import MyServices from './pages/MyServices/MyServices.jsx';
+import MyFavorites from './pages/MyFavorites/MyFavorites.jsx';
 
 function App() {
   const { token } = useContext(UserContext);
+  console.log(token);
 
   return (
     <>
@@ -26,6 +30,9 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/services" element={<Services />} />
         <Route path="/services/:id" element={<DetalleService />} />
+        <Route path="/perfil" element={<Perfil />} />
+        <Route path="/user/services" element={<MyServices />} />
+        <Route path="/user/favorites" element={<MyFavorites />} />
       </Routes>
       <Footer />
     </>
