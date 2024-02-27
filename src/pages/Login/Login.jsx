@@ -39,10 +39,10 @@ export default function Login() {
     setSuccess(false);
 
     //verificar si los campos estan completados
-    if (!user?.Email || !user?.Password) {
+    if (!user?.email || !user?.contraseña) {
       setError('Faltan campos obligatorios por llenar.');
       return;
-    } else if (!emailPattern.test(user.Email)) {
+    } else if (!emailPattern.test(user.email)) {
       // verificar el correo
       setError(
         'Por favor, introduce una dirección de correo electrónico válida.'
@@ -50,8 +50,8 @@ export default function Login() {
       return;
     } else {
       const data = await loginUsuario(
-        user.Email,
-        user.Password
+        user.email,
+        user.contraseña
       );
       if (data) {
         setMessage('Inicio de sesión exitoso!');
@@ -76,24 +76,24 @@ export default function Login() {
           <Form.Floating className="mb-3">
             <Form.Control
               type="email"
-              id="Email"
+              id="email"
               placeholder="example@example.com"
               onChange={(e) => inputHandler(e)}
               className="w-100"
             />
-            <label htmlFor="Email">
+            <label htmlFor="email">
               <i className="bi bi-envelope"></i> Correo electrónico
             </label>
           </Form.Floating>
           <Form.Floating className="mb-3">
             <Form.Control
               type="password"
-              id="Password"
-              placeholder="Password"
+              id="contraseña"
+              placeholder="contraseña"
               onChange={(e) => inputHandler(e)}
               className="w-100"
             />
-            <label htmlFor="Password">
+            <label htmlFor="contraseña">
               <i className="bi bi-key"></i> Contraseña
             </label>
           </Form.Floating>
