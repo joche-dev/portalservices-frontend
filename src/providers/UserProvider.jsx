@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
-import { dataPublicaciones } from './Data';
+import { dataPublicaciones, dataUsuarios } from './Data';
+
 
 export const UserContext = createContext();
 
@@ -8,8 +9,7 @@ const initialStateToken = localStorage.getItem('token') || null;
 
 const UserProvider = ({ children }) => {
   const [token, setToken] = useState(initialStateToken);
-  const [login, setLogin] = useState({email: 'user@portalservicios', password: '123456'});
-  const [user, setUser] = useState({});
+  const [userLogin, setUserLogin] = useState({});
   const [publicaciones, setPublicaciones] = useState(dataPublicaciones)
 
   useEffect(() => {
@@ -21,15 +21,18 @@ const UserProvider = ({ children }) => {
   }, [token]);
 
   const loginUsuario = async (email, password) => {
-    const response = await fetch(`${URL_BASE}/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await response.json();
-    setUser(data.user || null);
-    setToken(data.token || null);
+    // const response = await fetch(`${URL_BASE}/login`, {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ email, password }),
+    // });
+    // const data = await response.json();
+    // setUserLogin(data.usuario || null);
+    // setToken(data.token || null);
+    const [data] = dataUsuarios.filter(usuario => usuario.email === email && usuario.contraseña === password)
+    setUserLogin(data || null);
 
+    return data
   };
 
   const registerUsuario = async (nombre, email, contraseña, ciudad, comuna) => {
@@ -52,7 +55,7 @@ const UserProvider = ({ children }) => {
         loginUsuario,
         registerUsuario,
         token,
-        login,
+        userLogin,
         logout,
         publicaciones
       }}

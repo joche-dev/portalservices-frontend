@@ -141,7 +141,7 @@ export const dataPublicaciones = [
     // },
   ];
 
-export const usuarios = [
+export const dataUsuarios = [
   {
     usuarioid: 1,
     nombre: "Juan Pérez",

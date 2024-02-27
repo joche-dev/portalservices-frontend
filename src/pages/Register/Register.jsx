@@ -52,6 +52,7 @@ export default function Register() {
       setError('Las contraseñas no coinciden.');
       return;
     }else{
+      console.log(user);
       //await registerUsuario(user.formGroupName, user.formGroupEmail, user.formGroupPassword, user.formGroupCity, user.formGroupComuna );
       setMessage('Registro exitoso!');
       setSuccess(true);
