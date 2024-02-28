@@ -42,12 +42,14 @@ export default function DetalleService() {
             {publicacionDetail.emailcontacto}{' '}
           </span>
           <span className="justify-content-start">
-            <i className="bi bi-phone-fill pe-1"></i>
+            <i className="bi bi-whatsapp"></i>
             {publicacionDetail.telefonocontacto}
           </span>
         </p>
         <div className="align-self-end mt-3">
-          <Button variant="outline-danger me-3"><i class="bi bi-heart"></i> Me gusta</Button>
+          <Button variant="primary me-3">
+            <i className="bi bi-hand-thumbs-up-fill"></i> Me gusta
+          </Button>
           <Link to={'/services'}>
             <Button variant="success">Volver</Button>
           </Link>
