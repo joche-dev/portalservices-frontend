@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useContext } from 'react';
 import { Row, Col, Form, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import Alert from '../../components/Alert';
 import { UserContext } from '../../providers/UserProvider';
 
@@ -14,6 +14,7 @@ export default function Login() {
 
   //usamos el context
   const { loginUsuario } = useContext(UserContext);
+  const navigate = useNavigate();
 
   //useEffect Alert
   useEffect(() => {
@@ -57,6 +58,7 @@ export default function Login() {
         setMessage('Inicio de sesión exitoso!');
         setSuccess(true);
         form.current.reset();
+        navigate('/user/services')
       } else {
         setError('Usuario o contraseña incorrecta!');
         return;

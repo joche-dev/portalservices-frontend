@@ -19,7 +19,7 @@ import MyFavorites from './pages/MyFavorites/MyFavorites.jsx';
 
 function App() {
   const { token } = useContext(UserContext);
-  console.log(token);
+
 
   return (
     <>

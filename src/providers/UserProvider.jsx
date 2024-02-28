@@ -5,19 +5,22 @@ export const UserContext = createContext();
 
 const URL_BASE = 'http://localhost:5000/users';
 const initialStateToken = localStorage.getItem('token') || null;
+const initialStateLogin = JSON.parse(localStorage.getItem('userLogin')) || null;
 
 const UserProvider = ({ children }) => {
   const [token, setToken] = useState(initialStateToken);
-  const [userLogin, setUserLogin] = useState({});
+  const [userLogin, setUserLogin] = useState(initialStateLogin);
   const [publicaciones, setPublicaciones] = useState(dataPublicaciones);
 
   useEffect(() => {
-    if (token) {
+    if (token && userLogin) {
       localStorage.setItem('token', token);
+      localStorage.setItem('userLogin', JSON.stringify(userLogin));
     } else {
       localStorage.removeItem('token');
+      localStorage.removeItem('userLogin');
     }
-  }, [token]);
+  }, [token, userLogin]);
 
   const loginUsuario = async (email, password) => {
     // const response = await fetch(`${URL_BASE}/login`, {
@@ -65,8 +68,9 @@ const UserProvider = ({ children }) => {
     return true;
   };
 
-  const logout = () => {
+  const logOut = () => {
     setToken(null);
+    setUserLogin(null);
   };
 
   return (
@@ -76,7 +80,7 @@ const UserProvider = ({ children }) => {
         registerUsuario,
         token,
         userLogin,
-        logout,
+        logOut,
         publicaciones,
       }}
     >
