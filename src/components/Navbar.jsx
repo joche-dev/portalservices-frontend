@@ -28,24 +28,28 @@ const Navigation = () => {
               Home
             </NavLink>
             <NavLink
-              className={({ isActive }) => (isActive ? 'link active me-2' : 'link me-2')}
+              className={({ isActive }) => (isActive ? 'link active me-2' : 'link')}
               to={'/services'}
             >
               Servicios
             </NavLink>
             {token && userLogin.nombre ? (
               <div className="dropdown d-flex flex-column align-items-end">
-                <span data-bs-toggle="dropdown" aria-expanded="false">
-                  Hola, {userLogin.nombre}
-                  <ImgPerfil />
+                <span data-bs-toggle="dropdown" aria-expanded="false" className='d-flex align-items-center navbar-perfil'>
+                  <ImgPerfil name={userLogin.nombre} img={userLogin.fotoperfil}/>
                 </span>
               
                 <ul className="dropdown-menu dropdown-menu-end text-center">
-                  <li><a className="dropdown-item" href="#">Perfil</a></li>
+                  <li><Link className="dropdown-item" to="/perfil">Editar Perfil</Link></li>
                   <li><Link className="dropdown-item" to="/user/services">Mis Publicaciones</Link></li>
-                  <li><a className="dropdown-item" href="#">Mis Favoritos</a></li>
+                  <li><Link className="dropdown-item" to="/user/favorites">Mis Favoritos</Link></li>
                   <li><hr className="dropdown-divider"></hr></li>
-                  <li><a className="dropdown-item" href="#"><Button variant='outline-danger'  onClick={logOut}>Cerrar sesión</Button></a></li>
+                  <li><Link className="dropdown-item" to="/">
+                        <Button variant='outline-danger'  onClick={logOut}>
+                          <i className="bi bi-door-closed-fill"></i> Cerrar sesión
+                        </Button>
+                      </Link>
+                  </li>
                 </ul>
               </div>
             ) : (

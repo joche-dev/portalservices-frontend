@@ -12,6 +12,7 @@ const UserProvider = ({ children }) => {
   const [userLogin, setUserLogin] = useState(initialStateLogin);
   const [publicaciones, setPublicaciones] = useState(dataPublicaciones);
 
+
   useEffect(() => {
     if (token && userLogin) {
       localStorage.setItem('token', token);

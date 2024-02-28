@@ -152,7 +152,7 @@ export const dataUsuarios = [
       ciudad: 'Santiago',
       comuna: 'Providencia',
       direccion: 'Av. Manuel Montt 123',
-      fotoperfil: 'imagen1.jpg',
+      fotoperfil: '',
       rol: 'usuario',
     },
   },
