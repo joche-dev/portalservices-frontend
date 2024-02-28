@@ -1,4 +1,4 @@
-@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css');
 
 #root {
   max-width: 1280px;
@@ -36,8 +36,7 @@
 }
 
 .navbar-perfil {
-  font-size: .9rem;
-  margin-left: 1rem;
+  font-size: 0.9rem;
 }
 
 .navbar-perfil .foto-perfil {
@@ -48,7 +47,7 @@
 }
 
 .navbar-perfil .foto-perfil:hover {
-  background-color: rgba(0, 119, 182, .8);
+  background-color: rgba(0, 119, 182, 0.8);
 }
 
 .card-mini {
@@ -65,15 +64,15 @@
   margin-top: auto;
   display: flex;
   flex-direction: column;
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 
 .footer span {
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
 .footer .social-icon {
   display: flex;
   align-items: center;
-  gap: .8rem;
+  gap: 0.8rem;
 }

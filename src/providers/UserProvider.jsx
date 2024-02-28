@@ -36,8 +36,8 @@ const UserProvider = ({ children }) => {
       ({ usuario }) =>
         usuario.email === email && usuario.contraseña === password
     );
-    setToken(data.token || null);
-    setUserLogin(data.usuario || null);
+    setToken(data?.token || null);
+    setUserLogin(data?.usuario || null);
 
     return data;
   };

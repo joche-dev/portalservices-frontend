@@ -28,13 +28,13 @@ const Navigation = () => {
               Home
             </NavLink>
             <NavLink
-              className={({ isActive }) => (isActive ? 'link active me-2' : 'link')}
+              className={({ isActive }) => (isActive ? 'link active' : 'link')}
               to={'/services'}
             >
               Servicios
             </NavLink>
             {token && userLogin.nombre ? (
-              <div className="dropdown d-flex flex-column align-items-end">
+              <div className="dropdown d-flex flex-column align-items-end ms-2">
                 <span data-bs-toggle="dropdown" aria-expanded="false" className='d-flex align-items-center navbar-perfil'>
                   <ImgPerfil name={userLogin.nombre} img={userLogin.fotoperfil}/>
                 </span>
@@ -53,7 +53,7 @@ const Navigation = () => {
                 </ul>
               </div>
             ) : (
-              <Link to={'/login'}>
+              <Link to={'/login'} className="ms-2">
                 <Button variant="success">Iniciar Sesión</Button>
               </Link>
             )}
