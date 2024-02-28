@@ -3,6 +3,7 @@ import { Row, Col, Form, Button } from 'react-bootstrap';
 import { Link, useNavigate  } from 'react-router-dom';
 import Alert from '../../components/Alert';
 import { UserContext } from '../../providers/UserProvider';
+import './Login.css';
 
 export default function Login() {
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -54,6 +55,7 @@ export default function Login() {
         user.email,
         user.contraseña
       );
+     
       if (data) {
         setMessage('Inicio de sesión exitoso!');
         setSuccess(true);
@@ -73,7 +75,6 @@ export default function Login() {
           ref={form}
           action="submit"
           onSubmit={(e) => submitHandler(e)}
-          className="w-100 text-center"
         >
           <Form.Floating className="mb-3">
             <Form.Control
@@ -108,11 +109,11 @@ export default function Login() {
         </p>
         <Alert message={error} success={success} confirm={message} />
       </Col>
-      <Col xs={12} md={6} lg={4} className="align-self-center">
+      <Col xs={12} md={6} lg={4} className="img-login">
         <img
           src=""
-          alt=""
-          style={{ width: '100%', height: '15rem', backgroundColor: 'gray' }}
+          alt="Foto Login"
+          className='d-inline-block w-100 h-100 bg-secondary'
         />
       </Col>
     </Row>
