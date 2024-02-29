@@ -40,9 +40,9 @@ const Navigation = () => {
                 </span>
               
                 <ul className="dropdown-menu dropdown-menu-end text-center">
-                  <li><Link className="dropdown-item" to="/perfil">Editar Perfil</Link></li>
-                  <li><Link className="dropdown-item" to="/user/services">Mis Publicaciones</Link></li>
-                  <li><Link className="dropdown-item" to="/user/favorites">Mis Favoritos</Link></li>
+                  <li><Link className="dropdown-item" to="/perfil"><i className="bi bi-pencil-square"></i> Editar Perfil</Link></li>
+                  <li><Link className="dropdown-item" to="/user/services"><i className="bi bi-images"></i> Mis Publicaciones</Link></li>
+                  <li><Link className="dropdown-item" to="/user/favorites"><i className="bi bi-heart"></i> Mis Favoritos</Link></li>
                   <li><hr className="dropdown-divider"></hr></li>
                   <li><Link className="dropdown-item" to="/">
                         <Button variant='outline-danger'  onClick={logOut}>
