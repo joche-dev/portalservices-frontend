@@ -81,6 +81,7 @@ const UserProvider = ({ children }) => {
         registerUsuario,
         token,
         userLogin,
+        setUserLogin,
         logOut,
         publicaciones,
       }}

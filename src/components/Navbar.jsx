@@ -39,15 +39,15 @@ const Navigation = () => {
                   <ImgPerfil name={userLogin.nombre} img={userLogin.fotoperfil}/>
                 </span>
               
-                <ul className="dropdown-menu dropdown-menu-end text-center">
+                <ul className="dropdown-menu dropdown-menu-end text-primary-emphasis">
                   <li><Link className="dropdown-item" to="/perfil"><i className="bi bi-pencil-square"></i> Editar Perfil</Link></li>
                   <li><Link className="dropdown-item" to="/user/services"><i className="bi bi-images"></i> Mis Publicaciones</Link></li>
                   <li><Link className="dropdown-item" to="/user/favorites"><i className="bi bi-heart"></i> Mis Favoritos</Link></li>
                   <li><hr className="dropdown-divider"></hr></li>
-                  <li><Link className="dropdown-item" to="/">
-                        <Button variant='outline-danger'  onClick={logOut}>
+                  <li><Link className="dropdown-item dropdown-item-out" to="/" onClick={logOut}>
+                        {/* <Button variant='outline-danger'  > */}
                           <i className="bi bi-door-closed-fill"></i> Cerrar sesión
-                        </Button>
+                        {/* </Button> */}
                       </Link>
                   </li>
                 </ul>
