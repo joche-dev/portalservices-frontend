@@ -37,17 +37,17 @@ export default function DetalleService() {
             <i className="bi bi-geo-alt-fill pe-1"></i>
             {publicacionDetail.comuna}, {publicacionDetail.ciudad}
           </span>
-          <span className="justify-content-start">
+          <Link to={'mailto:' + publicacionDetail.emailcontacto} className="justify-content-start">
             <i className="bi bi-envelope-fill pe-1"></i>
             {publicacionDetail.emailcontacto}{' '}
-          </span>
-          <span className="justify-content-start">
+          </Link>
+          <Link to={'https://wa.me/' + publicacionDetail.telefonocontacto.replace(/[+\s]/g, '')} className="justify-content-start">
             <i className="bi bi-whatsapp"></i>
             {publicacionDetail.telefonocontacto}
-          </span>
+          </Link>
         </p>
-        <div className="align-self-end mt-3">
-          <Button variant="primary me-3">
+        <div className="mt-3">
+          <Button variant="outline-primary me-3">
             <i className="bi bi-hand-thumbs-up-fill"></i> Me gusta
           </Button>
           <Link to={'/services'}>

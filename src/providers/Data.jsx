@@ -15,7 +15,7 @@ export const dataPublicaciones = [
   },
   {
     publicacionId: 2,
-    usuarioId: 102,
+    usuarioId: 101,
     titulo: 'Reparación de fontanería',
     contenido: 'Especializado en reparaciones de fontanería',
     imagen: 'imagen2.jpg',
@@ -29,7 +29,7 @@ export const dataPublicaciones = [
   },
   {
     publicacionId: 3,
-    usuarioId: 103,
+    usuarioId: 101,
     titulo: 'Instalación de gas',
     contenido: 'Servicio de instalación y reparación de gas',
     imagen: 'imagen3.jpg',
@@ -43,7 +43,7 @@ export const dataPublicaciones = [
   },
   {
     publicacionId: 4,
-    usuarioId: 104,
+    usuarioId: 102,
     titulo: 'Reparación de electrodomésticos',
     contenido: 'Experto en reparación de electrodomésticos',
     imagen: 'imagen4.jpg',
@@ -57,7 +57,7 @@ export const dataPublicaciones = [
   },
   {
     publicacionId: 5,
-    usuarioId: 105,
+    usuarioId: 102,
     titulo: 'Mantenimiento de calefacción',
     contenido: 'Ofrezco servicios de mantenimiento de calefacción',
     imagen: 'imagen5.jpg',
@@ -71,7 +71,7 @@ export const dataPublicaciones = [
   },
   {
     publicacionId: 6,
-    usuarioId: 106,
+    usuarioId: 103,
     titulo: 'Construcción y remodelación',
     contenido: 'Realizo trabajos de construcción y remodelación',
     imagen: 'imagen6.jpg',
@@ -85,7 +85,7 @@ export const dataPublicaciones = [
   },
   {
     publicacionId: 7,
-    usuarioId: 107,
+    usuarioId: 103,
     titulo: 'Pintura y decoración',
     contenido: 'Servicio de pintura y decoración de interiores',
     imagen: 'imagen7.jpg',
@@ -99,7 +99,7 @@ export const dataPublicaciones = [
   },
   {
     publicacionId: 8,
-    usuarioId: 108,
+    usuarioId: 103,
     titulo: 'Servicio de jardinería',
     contenido: 'Mantenimiento de jardines y diseño paisajístico',
     imagen: 'imagen8.jpg',
@@ -145,7 +145,7 @@ export const dataUsuarios = [
   {
     token: '123',
     usuario: {
-      usuarioid: 1,
+      usuarioid: 101,
       nombre: 'Juan Pérez',
       email: 'juan@example.com',
       contraseña: '123456',
@@ -159,7 +159,7 @@ export const dataUsuarios = [
   {
     token: '123',
     usuario: {
-      usuarioid: 2,
+      usuarioid: 102,
       nombre: 'María Gómez',
       email: 'maria@example.com',
       contraseña: '123456',
@@ -173,14 +173,14 @@ export const dataUsuarios = [
   {
     token: '123',
     usuario: {
-      usuarioid: 3,
+      usuarioid: 103,
       nombre: 'Carlos Rodríguez',
       email: 'carlos@example.com',
       contraseña: '123456',
       ciudad: 'Concepción',
       comuna: 'Talcahuano',
       direccion: 'Calle Colón 789',
-      fotoperfil: 'imagen3.jpg',
+      fotoperfil: '',
       rol: 'usuario',
     },
   },
