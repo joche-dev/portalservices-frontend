@@ -36,7 +36,7 @@ const Navigation = () => {
             {token && userLogin.nombre ? (
               <div className="dropdown d-flex flex-column align-items-end ms-2">
                 <span data-bs-toggle="dropdown" aria-expanded="false" className='d-flex align-items-center navbar-perfil'>
-                  <ImgPerfil name={userLogin.nombre} img={userLogin.fotoperfil}/>
+                  <ImgPerfil name={userLogin.nombre}/>
                 </span>
               
                 <ul className="dropdown-menu dropdown-menu-end text-primary-emphasis">

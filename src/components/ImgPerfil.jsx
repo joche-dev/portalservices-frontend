@@ -1,4 +1,4 @@
-export default function ImgPerfil({ name, img }) {
+export default function ImgPerfil({ name }) {
   function obtenerSiglas(nombre) {
     const palabras = nombre.split(' ');
     if (palabras.length == 1) {
@@ -11,20 +11,13 @@ export default function ImgPerfil({ name, img }) {
 
 
   return (
-    <>
-      {img ? (
-        <>
-          Hola, {name}
-          <img src={img} alt="Foto Perfil" className="foto-perfil rounded-circle ms-2"/>
-        </>
-      ) : (
+
         <>
           Hola, {name}
           <button className="foto-perfil rounded-circle ms-2">
-            <h4 className="m-0">{obtenerSiglas(name)}</h4>
+            <h5 className="m-0">{obtenerSiglas(name)}</h5>
           </button>
         </>
-      )}
-    </>
+
   );
 }
