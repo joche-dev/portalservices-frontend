@@ -16,15 +16,14 @@ export default function MyServices() {
   return (
     <Container className="p-3 p-md-5">
       <Button variant="success mb-3">
-        <i className="bi bi-plus-circle"></i> Nueva Publicación
+        Nueva Publicación
       </Button>
-      <Table responsive>
+      <Table responsive hover className="table-myservices">
         <thead>
           <tr>
-            <th className="col-1">Imagen</th>
-            <th className="col-5">Titulo</th>
-            <th className="col-4">Tipo</th>
-            <th className="col-2"></th>
+            <th className="col-1"></th>
+            <th className="col-auto"></th>
+            <th className="col-3 col-sm-1"></th>
           </tr>
         </thead>
         <tbody>
@@ -38,20 +37,25 @@ export default function MyServices() {
                   style={{ width: '4rem', height: '4rem' }}
                 />
               </td>
-              <td>{publicacion.titulo}</td>
-              <td>{publicacion.tiposervicio}</td>
               <td>
-                <Button variant="secondary me-2" size="sm">
-                  <i className="bi bi-arrow-repeat"></i> Editar
+                <span className="d-block fw-semibold">
+                  {publicacion.titulo}
+                </span>
+                <span className="d-block fs-7">Tipo servicio: {publicacion.tiposervicio}</span>
+                <span className="fs-7">Descripción: {publicacion.contenido}</span>
+              </td>
+              <td>
+                <Button variant="secondary d-block w-100 fs-7 mb-1 me-2" size="sm">
+                  Editar
                 </Button>
                 <Button
-                  variant="danger"
+                  variant="danger fs-7 d-block w-100"
                   size="sm"
                   onClick={() =>
                     deletePublicacionesUsuario(publicacion.publicacionId)
                   }
                 >
-                  <i className="bi bi-trash"></i> Eliminar
+                  Eliminar
                 </Button>
               </td>
             </tr>
