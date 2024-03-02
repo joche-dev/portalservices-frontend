@@ -109,7 +109,6 @@ export default function Perfil() {
               id="email"
               placeholder="example@example.com"
               value={updateUser.email}
-              className="form-control-disable"
               disabled
             />
             <label htmlFor="email" >

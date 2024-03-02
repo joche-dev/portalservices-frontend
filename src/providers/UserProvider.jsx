@@ -12,7 +12,6 @@ const UserProvider = ({ children }) => {
   const [userLogin, setUserLogin] = useState(initialStateLogin);
   const [publicaciones, setPublicaciones] = useState(dataPublicaciones);
 
-
   useEffect(() => {
     if (token && userLogin) {
       localStorage.setItem('token', token);
@@ -74,6 +73,23 @@ const UserProvider = ({ children }) => {
     setUserLogin(null);
   };
 
+  const getPublicacionesUsuario = () => {
+    const result = publicaciones.filter(
+      (publicacion) => publicacion.usuarioId === userLogin.usuarioId
+    );
+
+    return result;
+  };
+
+  const deletePublicacionesUsuario = (publicacionId) => {
+    console.log(publicacionId);
+    const result = publicaciones.filter(
+      (publicacion) => publicacion.publicacionId !== publicacionId
+    );
+
+    setPublicaciones(result);
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -84,6 +100,8 @@ const UserProvider = ({ children }) => {
         setUserLogin,
         logOut,
         publicaciones,
+        getPublicacionesUsuario,
+        deletePublicacionesUsuario,
       }}
     >
       {children}

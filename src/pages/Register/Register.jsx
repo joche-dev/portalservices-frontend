@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useContext } from 'react';
 import { Row, Col, Button, Form } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Alert from '../../components/Alert';
 import { UserContext } from '../../providers/UserProvider';
 
@@ -12,7 +12,6 @@ export default function Register() {
   const [message, setMessage] = useState('');
   const [user, setUser] = useState({});
   const form = useRef();
-  const navigate = useNavigate();
 
   //usamos el context
   const { registerUsuario } = useContext(UserContext);
