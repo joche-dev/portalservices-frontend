@@ -164,11 +164,12 @@ export default function Register() {
         </p>
         <Alert message={error} success={success} confirm={message} />
       </Col>
-      <Col xs={12} md={6} lg={4} className="align-self-center">
+      <Col xs={12} md={6} lg={4}>
         <img
-          src=""
-          alt=""
-          style={{ width: '100%', height: '15rem', backgroundColor: 'gray' }}
+          src="./register.jpg"
+          alt="Foto de manos entrelazadas"
+          className=' mt-md-5 rounded w-100 h-75'
+          // style={{ width: '100%', height: '15rem' }}
         />
       </Col>
     </Row>

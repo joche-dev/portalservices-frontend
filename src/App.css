@@ -7,6 +7,10 @@
   flex-direction: column;
 }
 
+.fs-7 {
+  font-size: .8rem;
+}
+
 .logo {
   display: flex;
   align-items: center;
@@ -93,6 +97,10 @@
 .detalle-contacto a:hover {
   -webkit-transform: translateY(-4px);
   transform: translateY(-4px);
+}
+
+.table-myservices {
+  min-width: 28rem;
 }
 
 .footer span {

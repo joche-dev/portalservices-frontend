@@ -111,9 +111,9 @@ export default function Login() {
       </Col>
       <Col xs={12} md={6} lg={4} className="img-login">
         <img
-          src=""
+          src="./login.jpg"
           alt="Foto Login"
-          className='d-inline-block w-100 h-100 bg-secondary'
+          className='mt-md-4 rounded w-100'
         />
       </Col>
     </Row>

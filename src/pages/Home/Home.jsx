@@ -25,7 +25,7 @@ export default function Home() {
             <Button variant="success">Únetenos ahora</Button>
           </Link>
         </div>
-        <img className="home-img w-100 w-md-50" src="" alt="" />
+        <img className="w-100 w-md-50" src="./home.png" alt="Foto de personas" />
       </article>
       <article className="text-center mx-auto">
         <h1 className="">Últimos servicios subidos</h1>
