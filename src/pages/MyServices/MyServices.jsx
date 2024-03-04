@@ -1,10 +1,12 @@
 import { Container, Table, Button } from 'react-bootstrap';
 import { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../../providers/UserProvider';
+import NewPublicacion from '../../components/NewPublicacion';
+import UpdatePublicacion from '../../components/UpdatePublicacion';
+import DeletePublicacion from '../../components/deletePublicacion';
 
 export default function MyServices() {
-  const { getPublicacionesUsuario, deletePublicacionesUsuario } =
-    useContext(UserContext);
+  const { getPublicacionesUsuario, userLogin } = useContext(UserContext);
   const [misPublicaciones, setMisPublicaciones] = useState(
     getPublicacionesUsuario
   );
@@ -15,9 +17,7 @@ export default function MyServices() {
 
   return (
     <Container className="p-3 p-md-5">
-      <Button variant="success mb-3">
-        Nueva Publicación
-      </Button>
+      <NewPublicacion usuarioId={userLogin.usuarioId} />
       <Table responsive hover className="table-myservices">
         <thead>
           <tr>
@@ -41,22 +41,16 @@ export default function MyServices() {
                 <span className="d-block fw-semibold">
                   {publicacion.titulo}
                 </span>
-                <span className="d-block fs-7">Tipo servicio: {publicacion.tiposervicio}</span>
-                <span className="fs-7">Descripción: {publicacion.contenido}</span>
+                <span className="d-block fs-7">
+                  Tipo servicio: {publicacion.tiposervicio}
+                </span>
+                <span className="fs-7">
+                  Descripción: {publicacion.contenido}
+                </span>
               </td>
               <td>
-                <Button variant="secondary d-block w-100 fs-7 mb-1 me-2" size="sm">
-                  Editar
-                </Button>
-                <Button
-                  variant="danger fs-7 d-block w-100"
-                  size="sm"
-                  onClick={() =>
-                    deletePublicacionesUsuario(publicacion.publicacionId)
-                  }
-                >
-                  Eliminar
-                </Button>
+                <UpdatePublicacion publicacion={publicacion} />
+                <DeletePublicacion publicacionId={publicacion.publicacionId} />
               </td>
             </tr>
           ))}

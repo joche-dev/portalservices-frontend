@@ -81,14 +81,22 @@ const UserProvider = ({ children }) => {
     return result;
   };
 
-  const deletePublicacionesUsuario = (publicacionId) => {
-    console.log(publicacionId);
+  const newPublicacionUsuario = (publicacion) => {
+    console.log(publicacion);
+  }
+
+  const updatePublicacionUsuario = (publicacion) => {
+    console.log(publicacion);
+  }
+
+  const deletePublicacionUsuario = (publicacionId) => {
     const result = publicaciones.filter(
       (publicacion) => publicacion.publicacionId !== publicacionId
     );
 
     setPublicaciones(result);
   };
+
 
   return (
     <UserContext.Provider
@@ -101,7 +109,9 @@ const UserProvider = ({ children }) => {
         logOut,
         publicaciones,
         getPublicacionesUsuario,
-        deletePublicacionesUsuario,
+        newPublicacionUsuario,
+        updatePublicacionUsuario,
+        deletePublicacionUsuario,
       }}
     >
       {children}
