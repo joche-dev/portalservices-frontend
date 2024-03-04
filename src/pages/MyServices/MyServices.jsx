@@ -1,9 +1,10 @@
-import { Container, Table, Button } from 'react-bootstrap';
+import { Container, Table } from 'react-bootstrap';
 import { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../../providers/UserProvider';
 import NewPublicacion from '../../components/NewPublicacion';
 import UpdatePublicacion from '../../components/UpdatePublicacion';
-import DeletePublicacion from '../../components/deletePublicacion';
+import DeletePublicacion from '../../components/DeletePublicacion'
+
 
 export default function MyServices() {
   const { getPublicacionesUsuario, userLogin } = useContext(UserContext);
