@@ -9,7 +9,10 @@ export default function Perfil() {
   const passwordPattern = /^.{6,}$/;
   const form = useRef();
   const { userLogin, setUserLogin } = useContext(UserContext);
-  const [ updateUser, setUpdateUser ] = useState({...userLogin, contraseña1: userLogin.contraseña});
+  const [updateUser, setUpdateUser] = useState({
+    ...userLogin,
+    contraseña1: userLogin.contraseña,
+  });
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState('');
@@ -29,8 +32,8 @@ export default function Perfil() {
   function inputHandler(e) {
     e.preventDefault();
     setUpdateUser({ ...updateUser, [e.target.id]: e.target.value });
-    console.log(updateUser);
   }
+  
   async function submitHandler(e) {
     e.preventDefault();
 
@@ -67,6 +70,7 @@ export default function Perfil() {
     }
     setUserLogin(updateUser);
   }
+  
   return (
     <Row className="w-100 p-3 justify-content-center p-md-5 mx-auto">
       <Col
@@ -82,15 +86,6 @@ export default function Perfil() {
           onSubmit={(e) => submitHandler(e)}
           className="w-100 text-center"
         >
-          {/* <Form.Floating className="mb-3">
-            <Form.Control
-            id="fotoperfil"
-            type="file" 
-            onChange={(e) => inputHandler(e)}/>
-            <label htmlFor="fotoperfil">
-            <i className="bi bi-card-image"></i> Foto de perfil
-            </label>
-          </Form.Floating> */}
           <Form.Floating className="mb-3">
             <Form.Control
               id="nombre"
@@ -111,7 +106,7 @@ export default function Perfil() {
               value={updateUser.email}
               disabled
             />
-            <label htmlFor="email" >
+            <label htmlFor="email">
               <i className="bi bi-envelope"></i> Correo electrónico
             </label>
           </Form.Floating>
