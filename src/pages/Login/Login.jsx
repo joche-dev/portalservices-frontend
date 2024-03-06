@@ -55,8 +55,9 @@ export default function Login() {
         user.email,
         user.contraseña
       );
+      console.log(data);
      
-      if (data) {
+      if (data.ok) {
         setMessage('Inicio de sesión exitoso!');
         setSuccess(true);
         form.current.reset();

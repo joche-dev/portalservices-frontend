@@ -68,9 +68,10 @@ export default function Register() {
       setError('Las contraseñas no coinciden.');
       return;
     } else {
+      console.log(user);
       const data = await registerUsuario(user);
-      if (data) {
-        setMessage('Registro exitoso!');
+      if (data.ok) {
+        setMessage(data.message);
         setSuccess(true);
         form.current.reset();
       }
