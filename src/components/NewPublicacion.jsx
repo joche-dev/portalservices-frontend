@@ -33,6 +33,22 @@ export default function NewPublicacion({ usuarioId }) {
     setNewPost({ ...newPost, [e.target.id]: e.target.value });
   }
 
+  const uploadImg = async (e) => {
+    const file = e.target.files[0];
+    const data = new FormData();
+    data.append('file', file);
+    data.append('upload_preset', 'portal_services');
+    const res = await fetch(
+      'https://api.cloudinary.com/v1_1/dk3wqmcdo/image/upload',
+      {
+        method: 'POST',
+        body: data,
+      }
+    );
+    const imgUrl = await res.json();
+    setNewPost({ ...newPost, imagen: imgUrl.secure_url });
+  };
+
   async function submitHandler(e) {
     e.preventDefault();
 
@@ -41,6 +57,7 @@ export default function NewPublicacion({ usuarioId }) {
 
     //verificar si los camos estan completados
     if (
+      !newPost?.imagen ||
       !newPost?.titulo ||
       !newPost?.tiposervicio ||
       !newPost?.contenido ||
@@ -52,13 +69,15 @@ export default function NewPublicacion({ usuarioId }) {
       setError('Faltan campos obligatorios por llenar.');
       return;
     } else if (!emailPattern.test(newPost.emailcontacto)) {
-      // verificar el correo
       setError(
         'Por favor, introduce una dirección de correo electrónico válida.'
       );
       return;
     } else if (!phonePatten.test(newPost.telefonocontacto)) {
       setError('Por favor, introduce un telefono valido. Ej: +56912345678');
+      return;
+    } else if (newPost.imagen === '') {
+      setError('Falta cargar la imagen.');
       return;
     }
 
@@ -93,7 +112,8 @@ export default function NewPublicacion({ usuarioId }) {
               <Form.Control
                 id="imagen"
                 type="file"
-                onChange={(e) => inputHandler(e)}
+                onChange={uploadImg}
+                accept=".jpg, .jpeg, .png"
               />
               <label htmlFor="imagen">
                 <i className="bi bi-card-image"></i> Foto del Servicio

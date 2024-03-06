@@ -33,7 +33,7 @@ export default function Perfil() {
     e.preventDefault();
     setUpdateUser({ ...updateUser, [e.target.id]: e.target.value });
   }
-  
+
   async function submitHandler(e) {
     e.preventDefault();
 
@@ -70,7 +70,7 @@ export default function Perfil() {
     }
     setUserLogin(updateUser);
   }
-  
+
   return (
     <Row className="w-100 p-3 justify-content-center p-md-5 mx-auto">
       <Col
@@ -79,7 +79,7 @@ export default function Perfil() {
         lg={4}
         className="d-flex flex-column text-center gap-2"
       >
-        <h1 className="fs-2">Editar perfil</h1>
+        <h1>Editar perfil</h1>
         <Form
           ref={form}
           action="submit"

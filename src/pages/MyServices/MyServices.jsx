@@ -3,8 +3,7 @@ import { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../../providers/UserProvider';
 import NewPublicacion from '../../components/NewPublicacion';
 import UpdatePublicacion from '../../components/UpdatePublicacion';
-import DeletePublicacion from '../../components/DeletePublicacion'
-
+import DeletePublicacion from '../../components/DeletePublicacion';
 
 export default function MyServices() {
   const { getPublicacionesUsuario, userLogin } = useContext(UserContext);
@@ -18,6 +17,7 @@ export default function MyServices() {
 
   return (
     <Container className="p-3 p-md-5">
+      <h1 className="mb-3">Mis Publicaciones</h1>
       <NewPublicacion usuarioId={userLogin.usuarioId} />
       <Table responsive hover className="table-myservices">
         <thead>
@@ -57,6 +57,9 @@ export default function MyServices() {
           ))}
         </tbody>
       </Table>
+      {!misPublicaciones.lenght && (
+        <p className="my-3">No hay publicaciones registradas, crear una nueva.</p>
+      )}
     </Container>
   );
 }

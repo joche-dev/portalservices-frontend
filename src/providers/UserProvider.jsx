@@ -3,7 +3,7 @@ import { dataPublicaciones, dataUsuarios } from './Data';
 
 export const UserContext = createContext();
 
-const URL_BASE = 'http://localhost:5000/users';
+const URL_BASE = 'https://portalservices-backend.onrender.com';
 const initialStateToken = localStorage.getItem('token') || null;
 const initialStateLogin = JSON.parse(localStorage.getItem('userLogin')) || null;
 
@@ -22,19 +22,13 @@ const UserProvider = ({ children }) => {
     }
   }, [token, userLogin]);
 
-  const loginUsuario = async (email, password) => {
-    // const response = await fetch(`${URL_BASE}/login`, {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ email, password }),
-    // });
-    // const data = await response.json();
-    // setUserLogin(data.usuario || null);
-    // setToken(data.token || null);
-    const data = dataUsuarios.find(
-      ({ usuario }) =>
-        usuario.email === email && usuario.contraseña === password
-    );
+  const loginUsuario = async (email, contraseña) => {
+    const response = await fetch(`${URL_BASE}/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, contraseña }),
+    });
+    const data = await response.json();
     setToken(data?.token || null);
     setUserLogin(data?.usuario || null);
 
@@ -42,30 +36,14 @@ const UserProvider = ({ children }) => {
   };
 
   const registerUsuario = async (userRegister) => {
-    // const response = await fetch(`${URL_BASE}/register`, {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ nombre, email, contraseña, ciudad, comuna }),
-    // });
-    // const data = await response.json();
-    const data = dataUsuarios.find(
-      ({ usuario }) => usuario.email === userRegister.email
-    );
-    if (data) {
-      return false;
-    }
-
-    dataUsuarios.push({
-      token: '123',
-      usuario: {
-        ...userRegister,
-        direccion: '',
-        fotoperfil: '',
-        rol: 'usuario',
-      },
+    const response = await fetch(`${URL_BASE}/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userRegister),
     });
+    const data = await response.json();
 
-    return true;
+    return data;
   };
 
   const logOut = () => {
@@ -83,11 +61,11 @@ const UserProvider = ({ children }) => {
 
   const newPublicacionUsuario = (publicacion) => {
     console.log(publicacion);
-  }
+  };
 
   const updatePublicacionUsuario = (publicacion) => {
     console.log(publicacion);
-  }
+  };
 
   const deletePublicacionUsuario = (publicacionId) => {
     const result = publicaciones.filter(
@@ -96,7 +74,6 @@ const UserProvider = ({ children }) => {
 
     setPublicaciones(result);
   };
-
 
   return (
     <UserContext.Provider
