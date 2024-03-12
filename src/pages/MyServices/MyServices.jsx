@@ -1,24 +1,22 @@
 import { Container, Table } from 'react-bootstrap';
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { UserContext } from '../../providers/UserProvider';
 import NewPublicacion from '../../components/NewPublicacion';
 import UpdatePublicacion from '../../components/UpdatePublicacion';
 import DeletePublicacion from '../../components/DeletePublicacion';
 
 export default function MyServices() {
-  const { getPublicacionesUsuario, userLogin } = useContext(UserContext);
-  const [misPublicaciones, setMisPublicaciones] = useState(
-    getPublicacionesUsuario
-  );
-
+  const { userLogin, misPublicaciones, getPublicacionesUsuario } = useContext(UserContext);
+ 
   useEffect(() => {
-    setMisPublicaciones(getPublicacionesUsuario);
-  }, [getPublicacionesUsuario]);
+    getPublicacionesUsuario();
+    
+  },[]);
 
   return (
     <Container className="p-3 p-md-5">
       <h1 className="mb-3">Mis Publicaciones</h1>
-      <NewPublicacion usuarioId={userLogin.usuarioId} />
+      <NewPublicacion usuario_id={userLogin.usuario_id} />
       <Table responsive hover className="table-myservices">
         <thead>
           <tr>
@@ -28,7 +26,7 @@ export default function MyServices() {
           </tr>
         </thead>
         <tbody>
-          {misPublicaciones.map((publicacion, index) => (
+          {misPublicaciones.length > 0 && misPublicaciones.map((publicacion, index) => (
             <tr className="align-middle" key={index}>
               <td>
                 <img
@@ -43,7 +41,7 @@ export default function MyServices() {
                   {publicacion.titulo}
                 </span>
                 <span className="d-block fs-7">
-                  Tipo servicio: {publicacion.tiposervicio}
+                  Tipo servicio: {publicacion.tipo_servicio}
                 </span>
                 <span className="fs-7">
                   Descripción: {publicacion.contenido}
@@ -51,14 +49,14 @@ export default function MyServices() {
               </td>
               <td>
                 <UpdatePublicacion publicacion={publicacion} />
-                <DeletePublicacion publicacionId={publicacion.publicacionId} />
+                <DeletePublicacion publicacion_id={publicacion.publicacion_id} />
               </td>
             </tr>
           ))}
         </tbody>
       </Table>
-      {!misPublicaciones.lenght && (
-        <p className="my-3">No hay publicaciones registradas, crear una nueva.</p>
+      {misPublicaciones.length <= 0 && (
+        <p className="my-3">No hay publicaciones registradas.</p>
       )}
     </Container>
   );

@@ -3,10 +3,10 @@ import { useRef, useContext, useState, useEffect } from 'react';
 import { UserContext } from '../providers/UserProvider';
 import Alert from './Alert';
 
-export default function NewPublicacion({ usuarioId }) {
+export default function NewPublicacion({ usuario_id }) {
   const { newPublicacionUsuario } = useContext(UserContext);
   const [show, setShow] = useState(false);
-  const [newPost, setNewPost] = useState({ usuarioId });
+  const [newPost, setNewPost] = useState({ usuario_id });
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState('');
@@ -59,21 +59,21 @@ export default function NewPublicacion({ usuarioId }) {
     if (
       !newPost?.imagen ||
       !newPost?.titulo ||
-      !newPost?.tiposervicio ||
+      !newPost?.tipo_servicio ||
       !newPost?.contenido ||
-      !newPost?.emailcontacto ||
-      !newPost?.telefonocontacto ||
+      !newPost?.email_contacto ||
+      !newPost?.telefono_contacto ||
       !newPost?.ciudad ||
       !newPost?.comuna
     ) {
       setError('Faltan campos obligatorios por llenar.');
       return;
-    } else if (!emailPattern.test(newPost.emailcontacto)) {
+    } else if (!emailPattern.test(newPost.email_contacto)) {
       setError(
         'Por favor, introduce una dirección de correo electrónico válida.'
       );
       return;
-    } else if (!phonePatten.test(newPost.telefonocontacto)) {
+    } else if (!phonePatten.test(newPost.telefono_contacto)) {
       setError('Por favor, introduce un telefono valido. Ej: +56912345678');
       return;
     } else if (newPost.imagen === '') {
@@ -81,12 +81,14 @@ export default function NewPublicacion({ usuarioId }) {
       return;
     }
 
-    newPublicacionUsuario(newPost);
-    setMessage('Registro exitoso!');
-    setSuccess(true);
-    form.current.reset();
-    setNewPost({ usuarioId });
-    handleClose();
+    const data = await newPublicacionUsuario(newPost);
+    if(data.ok){
+      setMessage('Registro exitoso!');
+      setSuccess(true);
+      form.current.reset();
+      setNewPost({ usuario_id });
+      handleClose();
+    }
   }
 
   return (
@@ -132,12 +134,12 @@ export default function NewPublicacion({ usuarioId }) {
             </Form.Floating>
             <Form.Floating className="mb-3">
               <Form.Control
-                id="tiposervicio"
+                id="tipo_servicio"
                 type="text"
                 placeholder="Tipo Servicio"
                 onChange={(e) => inputHandler(e)}
               />
-              <label htmlFor="tiposervicio">
+              <label htmlFor="tipo_servicio">
                 <i className="bi bi-gear"></i> Tipo Servicio
               </label>
             </Form.Floating>
@@ -155,22 +157,22 @@ export default function NewPublicacion({ usuarioId }) {
             <Form.Floating className="mb-3">
               <Form.Control
                 type="email"
-                id="emailcontacto"
+                id="email_contacto"
                 placeholder="example@example.com"
                 onChange={(e) => inputHandler(e)}
               />
-              <label htmlFor="emailcontacto">
+              <label htmlFor="email_contacto">
                 <i className="bi bi-envelope"></i> Email de Contacto
               </label>
             </Form.Floating>
             <Form.Floating className="mb-3">
               <Form.Control
                 type="text"
-                id="telefonocontacto"
+                id="telefono_contacto"
                 placeholder="example@example.com"
                 onChange={(e) => inputHandler(e)}
               />
-              <label htmlFor="telefonocontacto">
+              <label htmlFor="telefono_contacto">
                 <i className="bi bi-phone"></i> Telefono de Contacto
               </label>
             </Form.Floating>

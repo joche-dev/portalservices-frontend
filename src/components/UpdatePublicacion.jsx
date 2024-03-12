@@ -33,6 +33,22 @@ export default function UpdatePublicacion({ publicacion }) {
     setUpdatePost({ ...updatePost, [e.target.id]: e.target.value });
   }
 
+  const uploadImg = async (e) => {
+    const file = e.target.files[0];
+    const data = new FormData();
+    data.append('file', file);
+    data.append('upload_preset', 'portal_services');
+    const res = await fetch(
+      'https://api.cloudinary.com/v1_1/dk3wqmcdo/image/upload',
+      {
+        method: 'POST',
+        body: data,
+      }
+    );
+    const imgUrl = await res.json();
+    setUpdatePost({ ...updatePost, imagen: imgUrl.secure_url });
+  };
+
   async function submitHandler(e) {
     e.preventDefault();
 
@@ -42,31 +58,34 @@ export default function UpdatePublicacion({ publicacion }) {
     //verificar si los camos estan completados
     if (
       !updatePost?.titulo ||
-      !updatePost?.tiposervicio ||
+      !updatePost?.tipo_servicio ||
       !updatePost?.contenido ||
-      !updatePost?.emailcontacto ||
-      !updatePost?.telefonocontacto ||
+      !updatePost?.email_contacto ||
+      !updatePost?.telefono_contacto ||
       !updatePost?.ciudad ||
       !updatePost?.comuna
     ) {
       setError('Faltan campos obligatorios por llenar.');
       return;
-    } else if (!emailPattern.test(updatePost.emailcontacto)) {
+    } else if (!emailPattern.test(updatePost.email_contacto)) {
       // verificar el correo
       setError(
         'Por favor, introduce una dirección de correo electrónico válida.'
       );
       return;
-    } else if (!phonePatten.test(updatePost.telefonocontacto)) {
+    } else if (!phonePatten.test(updatePost.telefono_contacto)) {
       setError('Por favor, introduce un telefono valido. Ej: +56912345678');
       return;
     }
 
-    updatePublicacionUsuario(updatePost);
-    setMessage('Registro exitoso!');
-    setSuccess(true);
-    form.current.reset();
-    handleClose();
+    const data = await updatePublicacionUsuario(updatePost);
+    if(data.ok){
+      setMessage('Registro exitoso!');
+      setSuccess(true);
+      form.current.reset();
+      handleClose();
+    }
+    
   }
 
   return (
@@ -95,7 +114,8 @@ export default function UpdatePublicacion({ publicacion }) {
               <Form.Control
                 id="imagen"
                 type="file"
-                onChange={(e) => inputHandler(e)}
+                onChange={uploadImg}
+                accept=".jpg, .jpeg, .png"
               />
               <label htmlFor="imagen">
                 <i className="bi bi-card-image"></i> Foto del Servicio
@@ -118,7 +138,7 @@ export default function UpdatePublicacion({ publicacion }) {
                 id="tiposervicio"
                 type="text"
                 placeholder="Tipo Servicio"
-                value={updatePost.tiposervicio}
+                value={updatePost.tipo_servicio}
                 onChange={(e) => inputHandler(e)}
               />
               <label htmlFor="tiposervicio">
@@ -142,7 +162,7 @@ export default function UpdatePublicacion({ publicacion }) {
                 type="email"
                 id="emailcontacto"
                 placeholder="example@example.com"
-                value={updatePost.emailcontacto}
+                value={updatePost.email_contacto}
                 onChange={(e) => inputHandler(e)}
               />
               <label htmlFor="emailcontacto">
@@ -154,7 +174,7 @@ export default function UpdatePublicacion({ publicacion }) {
                 type="text"
                 id="telefonocontacto"
                 placeholder="example@example.com"
-                value={updatePost.telefonocontacto}
+                value={updatePost.telefono_contacto}
                 onChange={(e) => inputHandler(e)}
               />
               <label htmlFor="telefonocontacto">
