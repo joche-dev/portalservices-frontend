@@ -2,14 +2,15 @@ import { useContext } from 'react';
 import { UserContext } from '../../providers/UserProvider';
 import { useParams, Link } from 'react-router-dom';
 import { Row, Col, Button } from 'react-bootstrap';
-import './DetalleService.css';
+import DateFormat from '../../components/DateFormat'
+
 
 export default function DetalleService() {
   const { id } = useParams();
   const { publicaciones } = useContext(UserContext);
 
   const [publicacionDetail] = publicaciones.filter(
-    (publicacion) => publicacion.publicacionId == id
+    (publicacion) => publicacion.publicacion_id == id
   );
 
   return (
@@ -17,18 +18,18 @@ export default function DetalleService() {
       <Col xs={12} md={4} lg={4} className="p-0">
         <img
           src={publicacionDetail.imagen}
-          alt=""
-          style={{ width: '100%', height: '20rem', backgroundColor: 'gray' }}
+          alt="Foto del Servicio"
+          className='detalleservice-img'
         />
       </Col>
       <Col xs={12} md={8} lg={7} className="d-flex flex-column p-0 p-md-3">
         <h5 className="d-flex justify-content-between my-2">
           <span className="fw-bolder">{publicacionDetail.titulo}</span>
-          <span className="card-date fw-light">
-            {publicacionDetail.fechapublicacion}
+          <span className="detalleservice-date fw-light">
+            <DateFormat fechaOriginal={publicacionDetail.fecha_publicacion} />
           </span>
         </h5>
-        <h6 className="fw-medium mb-3">{publicacionDetail.tiposervicio}</h6>
+        <h6 className="fw-medium mb-3">{publicacionDetail.tipo_servicio}</h6>
         <p className="justify-content-start mb-3">
           {publicacionDetail.contenido}
         </p>
@@ -38,22 +39,22 @@ export default function DetalleService() {
             {publicacionDetail.comuna}, {publicacionDetail.ciudad}
           </span>
           <Link
-            to={'mailto:' + publicacionDetail.emailcontacto}
+            to={'mailto:' + publicacionDetail.email_contacto}
             className="justify-content-start"
           >
             <i className="bi bi-envelope-fill pe-1"></i>
-            {publicacionDetail.emailcontacto}{' '}
+            {publicacionDetail.email_contacto}{' '}
           </Link>
           <Link
             to={
               'https://wa.me/' +
-              publicacionDetail.telefonocontacto.replace(/[+\s]/g, '')
+              publicacionDetail.telefono_contacto.replace(/[+\s]/g, '')
             }
             target="_blank"
             className="justify-content-start"
           >
             <i className="bi bi-whatsapp"></i>
-            {publicacionDetail.telefonocontacto}
+            {publicacionDetail.telefono_contacto}
           </Link>
         </p>
         <div className="mt-3">

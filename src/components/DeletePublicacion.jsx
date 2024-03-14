@@ -1,16 +1,19 @@
 import { Modal, Button } from 'react-bootstrap';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../providers/UserProvider';
 
 export default function DeletePublicacion({ publicacion_id }) {
-  const { deletePublicacionUsuario } = useContext(UserContext);
+  const { getPublicacionesUsuario, deletePublicacionUsuario } = useContext(UserContext);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   
-  const confirmDeletePost = () => {
-    deletePublicacionUsuario(publicacion_id);
+  const confirmDeletePost = async () => {
+    const data = await deletePublicacionUsuario(publicacion_id);
+    if (data.ok) {
+      await getPublicacionesUsuario()
+    }
     handleClose();
   };
 

@@ -8,9 +8,9 @@ export default function CardServicio({ publicacion }) {
     <Card className='card-mini'>
       <Card.Img variant="top" src={publicacion.imagen} />
       <Card.Body className="p-2">
-        <Card.Title className="text-center">{publicacion.titulo}</Card.Title>
-        <Card.Text>{publicacion.tiposervicio}</Card.Text>
-        <Card.Text>{publicacion.contenido}</Card.Text>
+        <Card.Title className="text-center text-truncate">{publicacion.titulo}</Card.Title>
+        <Card.Text>{publicacion.tipo_servicio}</Card.Text>
+        <Card.Text className="text-truncate">{publicacion.contenido}</Card.Text>
       </Card.Body>
       <Card.Text className="card-footer">
         <span className="d-flex align-items-center">
@@ -20,7 +20,7 @@ export default function CardServicio({ publicacion }) {
         <Button
           variant="outline-secondary ms-2"
           size="sm"
-          onClick={() => navigate(`/services/${publicacion.publicacionId}`)}
+          onClick={() => navigate(`/services/${publicacion.publicacion_id}`)}
         >
           Más detalles
         </Button>
