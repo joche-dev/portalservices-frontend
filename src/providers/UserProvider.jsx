@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState } from 'react';
-import { dataPublicaciones } from './Data';
 
 export const UserContext = createContext();
 
@@ -10,20 +9,11 @@ const initialStateLogin = JSON.parse(localStorage.getItem('userLogin')) || null;
 const UserProvider = ({ children }) => {
   const [token, setToken] = useState(initialStateToken);
   const [userLogin, setUserLogin] = useState(initialStateLogin);
-  const [publicaciones, setPublicaciones] = useState(dataPublicaciones);
+  const [publicaciones, setPublicaciones] = useState([]);
   const [misPublicaciones, setMisPublicaciones] = useState([]);
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(1);
 
-  useEffect(() => {
-    if (token && userLogin) {
-      localStorage.setItem('token', token);
-      localStorage.setItem('userLogin', JSON.stringify(userLogin));
-    } else {
-      localStorage.removeItem('token');
-      localStorage.removeItem('userLogin');
-    }
-  }, [token, userLogin]);
-
+ 
   const loginUsuario = async (email, contraseña) => {
     const response = await fetch(`${URL_BASE}/login`, {
       method: 'POST',
@@ -53,17 +43,30 @@ const UserProvider = ({ children }) => {
     setUserLogin(null);
   };
 
+  const getPublicaciones = async () => {
+    const response = await fetch(`${URL_BASE}/servicios?page=${page}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await response.json();
+    const { results } = data;
+    console.log('Pase por getPublicaciones');
+    setPublicaciones(results);
+  };
+
   const getPublicacionesUsuario = async () => {
     const response = await fetch(`${URL_BASE}/user/servicios?page=${page}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
     const data = await response.json();
-    const { results } = data; 
-        
+    const { results } = data;
+    console.log('Pase por getMisPublicaciones');
     setMisPublicaciones(results);
   };
 
@@ -72,12 +75,11 @@ const UserProvider = ({ children }) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(publicacion),
     });
     const data = await response.json();
-    await getPublicacionesUsuario();
 
     return data;
   };
@@ -87,13 +89,12 @@ const UserProvider = ({ children }) => {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(publicacion),
     });
     const data = await response.json();
-    await getPublicacionesUsuario();
-    
+
     return data;
   };
 
@@ -102,15 +103,24 @@ const UserProvider = ({ children }) => {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({publicacion_id}),
+      body: JSON.stringify({ publicacion_id }),
     });
     const data = await response.json();
-    await getPublicacionesUsuario();
 
     return data;
   };
+
+  useEffect(() => {
+    if (token && userLogin) {
+      localStorage.setItem('token', token);
+      localStorage.setItem('userLogin', JSON.stringify(userLogin));
+    } else {
+      localStorage.removeItem('token');
+      localStorage.removeItem('userLogin');
+    }
+  }, [ token, userLogin]);
 
   return (
     <UserContext.Provider
@@ -122,6 +132,7 @@ const UserProvider = ({ children }) => {
         setUserLogin,
         logOut,
         publicaciones,
+        getPublicaciones,
         misPublicaciones,
         getPublicacionesUsuario,
         newPublicacionUsuario,

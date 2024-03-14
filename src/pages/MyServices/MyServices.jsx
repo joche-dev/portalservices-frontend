@@ -7,11 +7,11 @@ import DeletePublicacion from '../../components/DeletePublicacion';
 
 export default function MyServices() {
   const { userLogin, misPublicaciones, getPublicacionesUsuario } = useContext(UserContext);
- 
+
   useEffect(() => {
     getPublicacionesUsuario();
     
-  },[]);
+  }, []);
 
   return (
     <Container className="p-3 p-md-5">
@@ -26,37 +26,37 @@ export default function MyServices() {
           </tr>
         </thead>
         <tbody>
-          {misPublicaciones.length > 0 && misPublicaciones.map((publicacion, index) => (
-            <tr className="align-middle" key={index}>
-              <td>
-                <img
-                  src={publicacion.imagen}
-                  alt="Foto Servicio"
-                  className="d-block border"
-                  style={{ width: '4rem', height: '4rem' }}
-                />
-              </td>
-              <td>
-                <span className="d-block fw-semibold">
-                  {publicacion.titulo}
-                </span>
-                <span className="d-block fs-7">
-                  Tipo servicio: {publicacion.tipo_servicio}
-                </span>
-                <span className="fs-7">
-                  Descripción: {publicacion.contenido}
-                </span>
-              </td>
-              <td>
-                <UpdatePublicacion publicacion={publicacion} />
-                <DeletePublicacion publicacion_id={publicacion.publicacion_id} />
-              </td>
-            </tr>
-          ))}
+          {misPublicaciones.length > 0 &&
+            misPublicaciones.map((publicacion, index) => (
+              <tr className="align-middle" key={index}>
+                <td>
+                  <img
+                    src={publicacion.imagen}
+                    alt="Foto Servicio"
+                    className="d-block border"
+                  />
+                </td>
+                <td>
+                  <span className="d-block fw-semibold">
+                    {publicacion.titulo}
+                  </span>
+                  <span className="d-block fs-7">
+                    Tipo servicio: {publicacion.tipo_servicio}
+                  </span>
+                  <span className="fs-7">
+                    Descripción: {publicacion.contenido}
+                  </span>
+                </td>
+                <td>
+                  <UpdatePublicacion publicacion={publicacion} />
+                  <DeletePublicacion publicacion_id={publicacion.publicacion_id} />
+                </td>
+              </tr>
+            ))}
         </tbody>
       </Table>
       {misPublicaciones.length <= 0 && (
-        <p className="my-3">No hay publicaciones registradas.</p>
+        <p className="my-3">No hay publicaciones por mostrar.</p>
       )}
     </Container>
   );

@@ -4,9 +4,11 @@ import { UserContext } from '../providers/UserProvider';
 import Alert from './Alert';
 
 export default function NewPublicacion({ usuario_id }) {
-  const { newPublicacionUsuario } = useContext(UserContext);
+  const { newPublicacionUsuario, getPublicacionesUsuario } =
+    useContext(UserContext);
   const [show, setShow] = useState(false);
   const [newPost, setNewPost] = useState({ usuario_id });
+  const [statusImg, setStatusImg] = useState({ ok: false, msg: '' });
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState('');
@@ -14,7 +16,11 @@ export default function NewPublicacion({ usuario_id }) {
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const phonePatten = /^\+56\d{9}$/;
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setNewPost({ usuario_id });
+    setStatusImg({ ok: false, msg: '' });
+    setShow(false);
+  };
   const handleShow = () => setShow(true);
 
   useEffect(() => {
@@ -34,19 +40,36 @@ export default function NewPublicacion({ usuario_id }) {
   }
 
   const uploadImg = async (e) => {
-    const file = e.target.files[0];
-    const data = new FormData();
-    data.append('file', file);
-    data.append('upload_preset', 'portal_services');
-    const res = await fetch(
-      'https://api.cloudinary.com/v1_1/dk3wqmcdo/image/upload',
-      {
-        method: 'POST',
-        body: data,
+    try {
+      const file = e.target.files[0];
+      const data = new FormData();
+      data.append('file', file);
+      data.append('upload_preset', 'portal_services');
+      setStatusImg({ ok: false, msg: 'Subiendo imagen a la web.' });
+      const res = await fetch(
+        'https://api.cloudinary.com/v1_1/dk3wqmcdo/image/upload',
+        {
+          method: 'POST',
+          body: data,
+        }
+      );
+      if(res.ok){
+        const imgUrl = await res.json();
+        setStatusImg({ ok: true, msg: 'Imagen subida a la web.' });
+        setNewPost({ ...newPost, imagen: imgUrl.secure_url });
+      } else {
+        setStatusImg({
+          ok: false,
+          msg: 'No se pudo subir la imagen a la web.',
+        });
       }
-    );
-    const imgUrl = await res.json();
-    setNewPost({ ...newPost, imagen: imgUrl.secure_url });
+
+    } catch (error) {
+      setStatusImg({
+        ok: false,
+        msg: 'No se pudo subir la imagen a la web.',
+      });
+    }
   };
 
   async function submitHandler(e) {
@@ -82,11 +105,13 @@ export default function NewPublicacion({ usuario_id }) {
     }
 
     const data = await newPublicacionUsuario(newPost);
-    if(data.ok){
+    if (data.ok) {
       setMessage('Registro exitoso!');
       setSuccess(true);
+      await getPublicacionesUsuario();
       form.current.reset();
       setNewPost({ usuario_id });
+      setStatusImg({ ok: false, msg: '' });
       handleClose();
     }
   }
@@ -110,7 +135,7 @@ export default function NewPublicacion({ usuario_id }) {
         </Modal.Header>
         <Modal.Body>
           <Form ref={form} action="submit" onSubmit={(e) => submitHandler(e)}>
-            <Form.Floating className="mb-3">
+            <Form.Floating>
               <Form.Control
                 id="imagen"
                 type="file"
@@ -121,6 +146,15 @@ export default function NewPublicacion({ usuario_id }) {
                 <i className="bi bi-card-image"></i> Foto del Servicio
               </label>
             </Form.Floating>
+            <p
+              className={`${
+                statusImg.ok
+                  ? 'text-success ps-2 mb-3'
+                  : 'text-danger ps-2 mb-3'
+              }`}
+            >
+              {statusImg.msg}
+            </p>
             <Form.Floating className="mb-3">
               <Form.Control
                 id="titulo"
@@ -204,7 +238,11 @@ export default function NewPublicacion({ usuario_id }) {
               <Button variant="secondary me-2 mb-3" onClick={handleClose}>
                 Cerrar
               </Button>
-              <Button variant="success mb-3" type="submit">
+              <Button
+                variant="success mb-3"
+                type="submit"
+                disabled={statusImg.ok ? false : true}
+              >
                 Guardar
               </Button>
             </div>

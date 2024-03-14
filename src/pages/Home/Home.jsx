@@ -1,13 +1,18 @@
 import './Home.css';
 
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { UserContext } from '../../providers/UserProvider.jsx';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import CardServicio from '../../components/CardServicio.jsx';
 
 export default function Home() {
-  const { publicaciones } = useContext(UserContext);
+  const { publicaciones, getPublicaciones, misPublicaciones } = useContext(UserContext);
+
+  useEffect(() => {
+    getPublicaciones();
+    
+  }, [misPublicaciones]);
 
   return (
     <Container className="home">
@@ -31,7 +36,7 @@ export default function Home() {
         <h1 className="">Últimos servicios subidos</h1>
         <p>Ingresa tu servicio o la de un vecino!</p>
         <Row xs={1} md={2} lg={4} className="g-4">
-          {publicaciones.slice(-4).map((publicacion, id) => (
+          {publicaciones.slice(0,4).map((publicacion, id) => (
             <Col key={id}>
               <CardServicio publicacion={publicacion} />
             </Col>
