@@ -11,6 +11,7 @@ const UserProvider = ({ children }) => {
   const [userLogin, setUserLogin] = useState(initialStateLogin);
   const [publicaciones, setPublicaciones] = useState([]);
   const [misPublicaciones, setMisPublicaciones] = useState([]);
+  const [misFavoritos, setMisFavoritos] = useState([]);
   const [page, setPage] = useState(1);
 
  
@@ -112,6 +113,21 @@ const UserProvider = ({ children }) => {
     return data;
   };
 
+  const getFavoritosUsuario = async () => {
+    const response = await fetch(`${URL_BASE}/user/favoritos?page=${page}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    const { results } = data;
+    
+    setMisFavoritos(results);
+  };
+
+
   useEffect(() => {
     if (token && userLogin) {
       localStorage.setItem('token', token);
@@ -138,6 +154,8 @@ const UserProvider = ({ children }) => {
         newPublicacionUsuario,
         updatePublicacionUsuario,
         deletePublicacionUsuario,
+        misFavoritos,
+        getFavoritosUsuario
       }}
     >
       {children}
