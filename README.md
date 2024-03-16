@@ -10,7 +10,7 @@
 ## Backend (API REST)
 [🔗 portalservices-backend.onrender.com](https://portalservices-backend.onrender.com/)
 
-**Stack:** Node, Express, JWT. 
+**Stack:** Node, Express, PostgreSQL, JWT. 
 ## Authors
 
 - [@pablozambrano97](https://github.com/pablozambrano97)
