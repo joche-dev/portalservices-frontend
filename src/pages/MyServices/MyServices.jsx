@@ -14,7 +14,7 @@ export default function MyServices() {
   }, []);
 
   return (
-    <Container className="p-3 p-md-5">
+    <Container className="py-3 py-md-4">
       <h1 className="mb-3">Mis Publicaciones</h1>
       <NewPublicacion usuario_id={userLogin.usuario_id} />
       <Table responsive hover className="table-myservices">
