@@ -1,10 +1,10 @@
 import { useContext, useEffect } from 'react';
 import { UserContext } from '../../providers/UserProvider';
-import { Container, Form, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import CardServicio from '../../components/CardServicio.jsx';
 
 export default function MyFavorites() {
-  const { userLogin, misFavoritos, getFavoritosUsuario } = useContext(UserContext);
+  const { misFavoritos, getFavoritosUsuario } = useContext(UserContext);
 
   console.log(misFavoritos);
 

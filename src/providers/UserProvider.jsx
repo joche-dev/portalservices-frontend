@@ -13,8 +13,9 @@ const UserProvider = ({ children }) => {
   const [misPublicaciones, setMisPublicaciones] = useState([]);
   const [misFavoritos, setMisFavoritos] = useState([]);
   const [page, setPage] = useState(1);
+  const [filtros, setFiltros] = useState ({});
 
- 
+
   const loginUsuario = async (email, contraseña) => {
     const response = await fetch(`${URL_BASE}/login`, {
       method: 'POST',
@@ -45,16 +46,28 @@ const UserProvider = ({ children }) => {
   };
 
   const getPublicaciones = async () => {
-    const response = await fetch(`${URL_BASE}/servicios?page=${page}`, {
+    let URL = `${URL_BASE}/servicios?page=${page}`;
+    //const response = await fetch(`${URL_BASE}/servicios?page=${page}&titulo=${filtros?.titulo}&ciudad=${filtros?.ciudad}&comuna${filtros?.comuna}`, {
+      if(filtros?.titulo){
+        URL += `&titulo=${filtros.titulo}`; 
+      }else if (filtros?.ciudad){
+        URL += `&ciudad=${filtros.ciudad}`;
+      }else if (filtros?.comuna){
+        URL += `&comuna=${filtros.comuna}`;
+      }
+      console.log('URL consultada:', URL);
+      const response = await fetch(`${URL}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     });
+
     const data = await response.json();
     const { results } = data;
     console.log('Pase por getPublicaciones');
     setPublicaciones(results);
+    setFiltros({});
   };
 
   const getPublicacionesUsuario = async () => {
@@ -127,6 +140,40 @@ const UserProvider = ({ children }) => {
     setMisFavoritos(results);
   };
 
+  const newFavorito = async (usuario_id, publicacion_id) => {
+    const publicacion = {
+      usuario_id : usuario_id,
+      publicacion_id : publicacion_id
+    }
+    console.log(publicacion);
+    const response = await fetch(`${URL_BASE}/user/favoritos`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(publicacion),
+    });
+    const data = await response.json();
+
+    return data;
+  }
+
+  const deleteFavorito = async (favorito_id) => {
+
+    const response = await fetch(`${URL_BASE}/user/favoritos`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ favorito_id }),
+    });
+    const data = await response.json();
+
+    return data;
+  }
+
 
   useEffect(() => {
     if (token && userLogin) {
@@ -155,7 +202,11 @@ const UserProvider = ({ children }) => {
         updatePublicacionUsuario,
         deletePublicacionUsuario,
         misFavoritos,
-        getFavoritosUsuario
+        getFavoritosUsuario,
+        newFavorito,
+        filtros,
+        setFiltros,
+        deleteFavorito
       }}
     >
       {children}

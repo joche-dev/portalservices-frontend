@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../providers/UserProvider';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 
 export default function Filtro() {
+  const { getPublicaciones, filtros, setFiltros } = useContext(UserContext);
   const [regiones, setRegiones] = useState([]);
   const [selectedRegion, setSelectedRegion] = useState('');
   const [comunas, setComunas] = useState([]);
@@ -10,7 +12,7 @@ export default function Filtro() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/src/data/chilean-locations.json');
+        const response = await fetch('/data/chilean-locations.json');
         const data = await response.json();
         setRegiones(data.regiones);
       } catch (error) {
@@ -21,12 +23,11 @@ export default function Filtro() {
     fetchData();
   }, []);
 
-  console.log(regiones);
-
   const handleRegionChange = (e) => {
+    e.preventDefault();
     const selectedRegion = e.target.value;
     setSelectedRegion(selectedRegion);
-
+    setFiltros({...filtros, ciudad: e.target.value});
     // Filtrar las comunas correspondientes a la región seleccionada
     const selectedRegionData = regiones.find(
       (region) => region.name === selectedRegion
@@ -40,14 +41,29 @@ export default function Filtro() {
   };
 
   const handleCommuneChange = (e) => {
+    e.preventDefault();
     setSelectedCommune(e.target.value);
+    setFiltros({...filtros, comuna: e.target.value});
   };
+
+  const handleInput = (e) => {
+    e.preventDefault();
+    setFiltros({...filtros, titulo: e.target.value});
+  }
+
+  const filtrarBusqueda = async () => {
+    console.log('filtros aplicados:', filtros);
+    getPublicaciones();
+    document.getElementById('tituloEspecialidad').value = '';
+    setSelectedRegion('');
+    setSelectedCommune('');
+  }
 
   return (
     <Row className="mb-3">
       <Col xs={12} md={7} className="mb-3">
         <Form.Floating>
-          <Form.Control id="tituloEspecialidad" type="text" placeholder="" />
+          <Form.Control id="tituloEspecialidad" type="text" placeholder="" onChange={(e) => {handleInput(e)}} />
           <label htmlFor="tituloEspecialidad">
             <i className="bi bi-search"></i> Busca por titulo o especialidad
           </label>
@@ -58,7 +74,7 @@ export default function Filtro() {
           <Form.Select
             id="ciudad"
             value={selectedRegion}
-            onChange={handleRegionChange}
+            onChange={(e) => {handleRegionChange(e)}}
           >
             <option value="">Region</option>
             {regiones.map((region, index) => (
@@ -77,7 +93,7 @@ export default function Filtro() {
           <Form.Select
             id="comuna"
             value={selectedCommune}
-            onChange={handleCommuneChange}
+            onChange={(e)=>{handleCommuneChange(e)}}
             disabled={!selectedRegion}
           >
             <option value="">Comuna</option>
@@ -93,7 +109,7 @@ export default function Filtro() {
         </Form.Floating>
       </Col>
       <Col xs={12} md="auto" className="mb-3 mb-md-0">
-        <Button variant="success w-100 p-3">Buscar</Button>
+        <Button variant="success w-100 p-3" onClick={() => filtrarBusqueda()}>Buscar</Button>
       </Col>
     </Row>
   );

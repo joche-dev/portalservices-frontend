@@ -3,16 +3,32 @@ import { UserContext } from '../../providers/UserProvider';
 import { useParams, Link } from 'react-router-dom';
 import { Row, Col, Button } from 'react-bootstrap';
 import DateFormat from '../../components/DateFormat'
+import { useNavigate } from 'react-router-dom';
+
 
 
 export default function DetalleService() {
+  const navigate = useNavigate();
   const { id } = useParams();
-  const { publicaciones } = useContext(UserContext);
+  const { publicaciones, token, newFavorito, misFavoritos, deleteFavorito } = useContext(UserContext);
 
   const [publicacionDetail] = publicaciones.filter(
     (publicacion) => publicacion.publicacion_id == id
   );
 
+  const guardarFavorito = async (usuario_id, publicacion_id) => {
+
+    const encontrarFavorito = misFavoritos.find(
+      (publicacion) => publicacion.publicacion_id == id
+    );
+
+    if(encontrarFavorito){
+      const response = await deleteFavorito (encontrarFavorito.favorito_id);
+      navigate(`/user/favorites`);
+    }if(!encontrarFavorito){
+      const response = await newFavorito (usuario_id, publicacion_id);
+    }
+  } 
   return (
     <Row className="w-100 justify-content-center p-3 mt-5 mx-auto">
       <Col xs={12} md={4} lg={4} className="p-0">
@@ -58,9 +74,9 @@ export default function DetalleService() {
           </Link>
         </p>
         <div className="mt-3">
-          <Button variant="outline-primary me-3">
+          {token && ( <Button variant="outline-primary me-3" onClick={()=>guardarFavorito(publicacionDetail.usuario_id, publicacionDetail.publicacion_id)}>
             <i className="bi bi-hand-thumbs-up-fill"></i> Me gusta
-          </Button>
+          </Button>)}
           <Link to={'/services'}>
             <Button variant="success">Volver</Button>
           </Link>
