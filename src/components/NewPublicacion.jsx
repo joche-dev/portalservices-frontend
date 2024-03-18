@@ -12,16 +12,63 @@ export default function NewPublicacion({ usuario_id }) {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState('');
+  const [regiones, setRegiones] = useState([]);
+  const [selectedRegion, setSelectedRegion] = useState('');
+  const [comunas, setComunas] = useState([]);
+  const [selectedCommune, setSelectedCommune] = useState('');
   const form = useRef();
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const phonePatten = /^\+56\d{9}$/;
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/data/chilean-locations.json');
+        const data = await response.json();
+        setRegiones(data.regiones);
+      } catch (error) {
+        console.error('Error fetching data: ', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleRegionChange = (e) => {
+    e.preventDefault();
+    const selectedRegion = e.target.value;
+    setSelectedRegion(selectedRegion);
+    setNewPost({ ...newPost, ciudad: e.target.value });
+    // Filtrar las comunas correspondientes a la región seleccionada
+    const selectedRegionData = regiones.find(
+      (region) => region.name === selectedRegion
+    );
+    if (selectedRegionData) {
+      setComunas(selectedRegionData.comunas);
+    } else {
+      setComunas([]);
+    }
+    setSelectedCommune('');
+  };
+
+  const handleCommuneChange = (e) => {
+    e.preventDefault();
+    setSelectedCommune(e.target.value);
+    setNewPost({ ...newPost, comuna: e.target.value });
+  };
+
+
   const handleClose = () => {
     setNewPost({ usuario_id });
     setStatusImg({ ok: false, msg: '' });
+    setSelectedRegion('');
+    setSelectedCommune('');
+    form.current.reset();
     setShow(false);
   };
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    setShow(true);
+  }
 
   useEffect(() => {
     let timer;
@@ -77,7 +124,7 @@ export default function NewPublicacion({ usuario_id }) {
 
     setError(null);
     setSuccess(false);
-
+    console.log('Este es el new Post:', newPost);
     //verificar si los camos estan completados
     if (
       !newPost?.imagen ||
@@ -212,26 +259,39 @@ export default function NewPublicacion({ usuario_id }) {
             </Form.Floating>
             <div className="d-flex gap-2">
               <Form.Floating className="w-50 mb-3">
-                <Form.Control
-                  type="text"
-                  id="ciudad"
-                  placeholder="Ciudad"
-                  onChange={(e) => inputHandler(e)}
-                />
-                <label htmlFor="ciudad">
-                  <i className="bi bi-geo-alt"></i> Ciudad
-                </label>
+              <Form.Select
+                id="ciudad"
+                value={selectedRegion}
+                onChange={(e) => {handleRegionChange(e)}}
+              >
+              <option value="">Region</option>
+                {regiones.map((region, index) => (
+              <option key={index} value={region.name}>
+                {region.name}
+              </option>
+            ))}
+          </Form.Select>
+          <label htmlFor="ciudad">
+            <i className="bi bi-geo-alt"></i> Busca por
+          </label>
               </Form.Floating>
               <Form.Floating className="w-50 mb-3">
-                <Form.Control
-                  type="text"
-                  id="comuna"
-                  placeholder="Comuna"
-                  onChange={(e) => inputHandler(e)}
-                />
-                <label htmlFor="comuna">
-                  <i className="bi bi-geo-alt"></i> Comuna
-                </label>
+              <Form.Select
+                id="comuna"
+                value={selectedCommune}
+                onChange={(e)=>{handleCommuneChange(e)}}
+                disabled={!selectedRegion}
+              >
+              <option value="">Comuna</option>
+              {comunas.map((commune) => (
+              <option key={commune} value={commune}>
+                {commune}
+              </option>
+            ))}
+          </Form.Select>
+          <label htmlFor="comuna">
+            <i className="bi bi-geo-alt"></i> Busca por
+          </label>
               </Form.Floating>
             </div>
             <div className="text-end">

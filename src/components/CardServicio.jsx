@@ -10,10 +10,10 @@ export default function CardServicio({ publicacion }) {
       <Card.Body className="p-2">
         <Card.Title className="text-center text-truncate">{publicacion.titulo}</Card.Title>
         <Card.Text>{publicacion.tipo_servicio}</Card.Text>
-        <Card.Text className="text-truncate">{publicacion.contenido}</Card.Text>
+        <Card.Text className="text-truncate ">{publicacion.contenido}</Card.Text>
       </Card.Body>
       <Card.Text className="card-footer">
-        <span className="d-flex align-items-center">
+        <span className="d-flex align-items-center text-truncate w-50">
           <i className="bi bi-geo-alt-fill"></i>
           {publicacion.comuna}, {publicacion.ciudad}
         </span>
