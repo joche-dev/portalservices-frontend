@@ -11,6 +11,10 @@ export default function Register() {
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState('');
   const [user, setUser] = useState({});
+  const [regiones, setRegiones] = useState([]);
+  const [selectedRegion, setSelectedRegion] = useState('');
+  const [comunas, setComunas] = useState([]);
+  const [selectedCommune, setSelectedCommune] = useState('');
   const form = useRef();
 
   //usamos el context
@@ -32,9 +36,46 @@ export default function Register() {
     return () => clearTimeout(timer);
   }, [error, success]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/data/chilean-locations.json');
+        const data = await response.json();
+        setRegiones(data.regiones);
+      } catch (error) {
+        console.error('Error fetching data: ', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleRegionChange = (e) => {
+    e.preventDefault();
+    const selectedRegion = e.target.value;
+    setSelectedRegion(selectedRegion);
+    setUser({ ...user, ciudad: e.target.value });
+    // Filtrar las comunas correspondientes a la región seleccionada
+    const selectedRegionData = regiones.find(
+      (region) => region.name === selectedRegion
+    );
+    if (selectedRegionData) {
+      setComunas(selectedRegionData.comunas);
+    } else {
+      setComunas([]);
+    }
+    setSelectedCommune('');
+  };
+
+  const handleCommuneChange = (e) => {
+    e.preventDefault();
+    setSelectedCommune(e.target.value);
+    setUser({ ...user, comuna: e.target.value });
+  };
+
   async function submitHandler(e) {
     e.preventDefault();
-
+    console.log('datos a registrar:',user);
     setError(null);
     setSuccess(false);
 
@@ -113,26 +154,39 @@ export default function Register() {
             </label>
           </Form.Floating>
           <Form.Floating className="mb-3">
-            <Form.Control
-              type="text"
-              id="ciudad"
-              placeholder="Ciudad"
-              onChange={(e) => inputHandler(e)}
-            />
-            <label htmlFor="ciudad">
-              <i className="bi bi-geo-alt"></i> Ciudad
-            </label>
+          <Form.Select
+                id="ciudad"
+                value={selectedRegion}
+                onChange={(e) => {handleRegionChange(e)}}
+              >
+              <option value="">Region</option>
+                {regiones.map((region, index) => (
+              <option key={index} value={region.name}>
+                {region.name}
+              </option>
+            ))}
+          </Form.Select>
+          <label htmlFor="ciudad">
+            <i className="bi bi-geo-alt"></i> Región
+          </label>
           </Form.Floating>
           <Form.Floating className="mb-3">
-            <Form.Control
-              type="text"
-              id="comuna"
-              placeholder="Comuna"
-              onChange={(e) => inputHandler(e)}
-            />
-            <label htmlFor="comuna">
-              <i className="bi bi-geo-alt"></i> Comuna
-            </label>
+          <Form.Select
+                id="comuna"
+                value={selectedCommune}
+                onChange={(e)=>{handleCommuneChange(e)}}
+                disabled={!selectedRegion}
+              >
+              <option value="">Comuna</option>
+              {comunas.map((commune) => (
+              <option key={commune} value={commune}>
+                {commune}
+              </option>
+            ))}
+          </Form.Select>
+          <label htmlFor="comuna">
+            <i className="bi bi-geo-alt"></i> Comuna
+          </label>
           </Form.Floating>
           <Form.Floating className="mb-3">
             <Form.Control
