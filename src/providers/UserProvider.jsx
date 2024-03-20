@@ -43,6 +43,8 @@ const UserProvider = ({ children }) => {
   const logOut = () => {
     setToken(null);
     setUserLogin(null);
+    setMisPublicaciones([]);
+    setMisFavoritos([]);
   };
 
   const getPublicaciones = async (page=1) => {
