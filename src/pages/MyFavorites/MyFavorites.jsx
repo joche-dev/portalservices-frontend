@@ -6,8 +6,6 @@ import CardServicio from '../../components/CardServicio.jsx';
 export default function MyFavorites() {
   const { misFavoritos, getFavoritosUsuario } = useContext(UserContext);
 
-  console.log(misFavoritos);
-
   useEffect(() => {
     getFavoritosUsuario();
     
