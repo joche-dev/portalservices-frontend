@@ -28,7 +28,6 @@ export default function Filtro() {
     const selectedRegion = e.target.value;
     setSelectedRegion(selectedRegion);
     setFiltros({...filtros, ciudad: e.target.value});
-    // Filtrar las comunas correspondientes a la región seleccionada
     const selectedRegionData = regiones.find(
       (region) => region.name === selectedRegion
     );
@@ -52,9 +51,8 @@ export default function Filtro() {
   }
 
   const filtrarBusqueda = async () => {
-    console.log('filtros aplicados:', filtros);
     getPublicaciones();
-    document.getElementById('tituloEspecialidad').value = '';
+    document.getElementById('titulo').value = '';
     setSelectedRegion('');
     setSelectedCommune('');
   }
@@ -63,9 +61,9 @@ export default function Filtro() {
     <Row className="mb-3">
       <Col xs={12} md={7} className="mb-3">
         <Form.Floating>
-          <Form.Control id="tituloEspecialidad" type="text" placeholder="" onChange={(e) => {handleInput(e)}} />
-          <label htmlFor="tituloEspecialidad">
-            <i className="bi bi-search"></i> Busca por titulo o especialidad
+          <Form.Control id="titulo" type="text" placeholder="" onChange={(e) => {handleInput(e)}} />
+          <label htmlFor="titulo">
+            <i className="bi bi-search"></i> Busca por titulo
           </label>
         </Form.Floating>
       </Col>

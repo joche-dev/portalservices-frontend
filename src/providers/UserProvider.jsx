@@ -48,16 +48,17 @@ const UserProvider = ({ children }) => {
 
   const getPublicaciones = async () => {
     let URL = `${URL_BASE}/servicios?page=${page}`;
-    //const response = await fetch(`${URL_BASE}/servicios?page=${page}&titulo=${filtros?.titulo}&ciudad=${filtros?.ciudad}&comuna${filtros?.comuna}`, {
-      if(filtros?.titulo){
-        URL += `&titulo=${filtros.titulo}`; 
-      }else if (filtros?.ciudad){
-        URL += `&ciudad=${filtros.ciudad}`;
-      }else if (filtros?.comuna){
-        URL += `&comuna=${filtros.comuna}`;
-      }
-      console.log('URL consultada:', URL);
-      const response = await fetch(`${URL}`, {
+    if(filtros?.titulo){
+      URL += `&titulo=${filtros.titulo}`; 
+    }
+    if (filtros?.ciudad){
+      URL += `&ciudad=${filtros.ciudad}`;
+    }
+    if (filtros?.comuna){
+      URL += `&comuna=${filtros.comuna}`;
+    }
+
+    const response = await fetch(`${URL}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -65,11 +66,27 @@ const UserProvider = ({ children }) => {
     });
 
     const data = await response.json();
+
     const { results, meta } = data;
     console.log('Pase por getPublicaciones');
+
     setPublicaciones(results);
     setRespuesta(meta);
     setFiltros({});
+  };
+
+  const getPublicacion = async (id) => {
+    const URL = `${URL_BASE}/servicios/${id}`;
+    const response = await fetch(`${URL}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const {results} = await response.json();
+
+    return results;
   };
 
   const getPublicacionesUsuario = async () => {
@@ -82,7 +99,7 @@ const UserProvider = ({ children }) => {
     });
     const data = await response.json();
     const { results } = data;
-    console.log('Pase por getMisPublicaciones');
+
     setMisPublicaciones(results);
   };
 
@@ -137,32 +154,27 @@ const UserProvider = ({ children }) => {
       },
     });
     const data = await response.json();
-    const { results } = data;
     
-    setMisFavoritos(results);
+    setMisFavoritos(data.results);
+
+    return data.results;
   };
 
   const newFavorito = async (usuario_id, publicacion_id) => {
-    const publicacion = {
-      usuario_id : usuario_id,
-      publicacion_id : publicacion_id
-    }
-    console.log(publicacion);
     const response = await fetch(`${URL_BASE}/user/favoritos`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(publicacion),
+      body: JSON.stringify({ usuario_id, publicacion_id }),
     });
-    const data = await response.json();
+    const {results} = await response.json();
 
-    return data;
+    return results;
   }
 
   const deleteFavorito = async (favorito_id) => {
-
     const response = await fetch(`${URL_BASE}/user/favoritos`, {
       method: 'DELETE',
       headers: {
@@ -198,6 +210,7 @@ const UserProvider = ({ children }) => {
         logOut,
         publicaciones,
         getPublicaciones,
+        getPublicacion,
         misPublicaciones,
         getPublicacionesUsuario,
         newPublicacionUsuario,
