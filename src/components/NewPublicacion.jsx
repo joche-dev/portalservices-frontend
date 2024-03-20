@@ -39,7 +39,7 @@ export default function NewPublicacion({ usuario_id }) {
     const selectedRegion = e.target.value;
     setSelectedRegion(selectedRegion);
     setNewPost({ ...newPost, ciudad: e.target.value });
-    // Filtrar las comunas correspondientes a la región seleccionada
+
     const selectedRegionData = regiones.find(
       (region) => region.name === selectedRegion
     );
@@ -57,7 +57,6 @@ export default function NewPublicacion({ usuario_id }) {
     setNewPost({ ...newPost, comuna: e.target.value });
   };
 
-
   const handleClose = () => {
     setNewPost({ usuario_id });
     setStatusImg({ ok: false, msg: '' });
@@ -68,7 +67,7 @@ export default function NewPublicacion({ usuario_id }) {
   };
   const handleShow = () => {
     setShow(true);
-  }
+  };
 
   useEffect(() => {
     let timer;
@@ -100,7 +99,7 @@ export default function NewPublicacion({ usuario_id }) {
           body: data,
         }
       );
-      if(res.ok){
+      if (res.ok) {
         const imgUrl = await res.json();
         setStatusImg({ ok: true, msg: 'Imagen subida a la web.' });
         setNewPost({ ...newPost, imagen: imgUrl.secure_url });
@@ -110,7 +109,6 @@ export default function NewPublicacion({ usuario_id }) {
           msg: 'No se pudo subir la imagen a la web.',
         });
       }
-
     } catch (error) {
       setStatusImg({
         ok: false,
@@ -121,11 +119,9 @@ export default function NewPublicacion({ usuario_id }) {
 
   async function submitHandler(e) {
     e.preventDefault();
-
     setError(null);
     setSuccess(false);
-    console.log('Este es el new Post:', newPost);
-    //verificar si los camos estan completados
+
     if (
       !newPost?.imagen ||
       !newPost?.titulo ||
@@ -259,39 +255,43 @@ export default function NewPublicacion({ usuario_id }) {
             </Form.Floating>
             <div className="d-flex gap-2">
               <Form.Floating className="w-50 mb-3">
-              <Form.Select
-                id="ciudad"
-                value={selectedRegion}
-                onChange={(e) => {handleRegionChange(e)}}
-              >
-              <option value="">Region</option>
-                {regiones.map((region, index) => (
-              <option key={index} value={region.name}>
-                {region.name}
-              </option>
-            ))}
-          </Form.Select>
-          <label htmlFor="ciudad">
-            <i className="bi bi-geo-alt"></i> Busca por
-          </label>
+                <Form.Select
+                  id="ciudad"
+                  value={selectedRegion}
+                  onChange={(e) => {
+                    handleRegionChange(e);
+                  }}
+                >
+                  <option value="">Region</option>
+                  {regiones.map((region, index) => (
+                    <option key={index} value={region.name}>
+                      {region.name}
+                    </option>
+                  ))}
+                </Form.Select>
+                <label htmlFor="ciudad">
+                  <i className="bi bi-geo-alt"></i> Busca por
+                </label>
               </Form.Floating>
               <Form.Floating className="w-50 mb-3">
-              <Form.Select
-                id="comuna"
-                value={selectedCommune}
-                onChange={(e)=>{handleCommuneChange(e)}}
-                disabled={!selectedRegion}
-              >
-              <option value="">Comuna</option>
-              {comunas.map((commune) => (
-              <option key={commune} value={commune}>
-                {commune}
-              </option>
-            ))}
-          </Form.Select>
-          <label htmlFor="comuna">
-            <i className="bi bi-geo-alt"></i> Busca por
-          </label>
+                <Form.Select
+                  id="comuna"
+                  value={selectedCommune}
+                  onChange={(e) => {
+                    handleCommuneChange(e);
+                  }}
+                  disabled={!selectedRegion}
+                >
+                  <option value="">Comuna</option>
+                  {comunas.map((commune) => (
+                    <option key={commune} value={commune}>
+                      {commune}
+                    </option>
+                  ))}
+                </Form.Select>
+                <label htmlFor="comuna">
+                  <i className="bi bi-geo-alt"></i> Busca por
+                </label>
               </Form.Floating>
             </div>
             <div className="text-end">

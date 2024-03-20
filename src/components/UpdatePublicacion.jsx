@@ -15,20 +15,19 @@ export default function UpdatePublicacion({ publicacion }) {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState('');
+  const [regiones, setRegiones] = useState([]);
+  const [selectedRegion, setSelectedRegion] = useState('');
+  const [comunas, setComunas] = useState([]);
+  const [selectedCommune, setSelectedCommune] = useState('');
   const form = useRef();
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const phonePatten = /^\+56\d{9}$/;
 
-  const handleClose = () => {
-    setStatusImg({ ok: false, msg: '' });
-    setShow(false)
-  };
-  const handleShow = () => setShow(true);
-
+  
   useEffect(() => {
     setUpdatePost(publicacion);
   }, [misPublicaciones]);
-
+  
   useEffect(() => {
     let timer;
     if (error || success) {
@@ -39,6 +38,48 @@ export default function UpdatePublicacion({ publicacion }) {
     }
     return () => clearTimeout(timer);
   }, [error, success]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/data/chilean-locations.json');
+        const data = await response.json();
+        setRegiones(data.regiones);
+      } catch (error) {
+        console.error('Error fetching data: ', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  
+  const handleClose = () => {
+    setStatusImg({ ok: false, msg: '' });
+    setShow(false)
+  };
+  const handleShow = () => setShow(true);
+
+  const handleRegionChange = (e) => {
+    e.preventDefault();
+    const selectedRegion = e.target.value;
+    setSelectedRegion(selectedRegion);
+    setUpdatePost({ ...updatePost, ciudad: e.target.value });
+    const selectedRegionData = regiones.find(
+      (region) => region.name === selectedRegion
+    );
+    if (selectedRegionData) {
+      setComunas(selectedRegionData.comunas);
+    } else {
+      setComunas([]);
+    }
+    setSelectedCommune('');
+  };
+
+  const handleCommuneChange = (e) => {
+    e.preventDefault();
+    setSelectedCommune(e.target.value);
+    setUpdatePost({ ...updatePost, comuna: e.target.value });
+  };
 
   function inputHandler(e) {
     e.preventDefault();
@@ -80,11 +121,9 @@ export default function UpdatePublicacion({ publicacion }) {
 
   async function submitHandler(e) {
     e.preventDefault();
-
     setError(null);
     setSuccess(false);
 
-    //verificar si los camos estan completados
     if (
       !updatePost?.titulo ||
       !updatePost?.tipo_servicio ||
@@ -97,7 +136,6 @@ export default function UpdatePublicacion({ publicacion }) {
       setError('Faltan campos obligatorios por llenar.');
       return;
     } else if (!emailPattern.test(updatePost.email_contacto)) {
-      // verificar el correo
       setError(
         'Por favor, introduce una dirección de correo electrónico válida.'
       );
@@ -174,13 +212,13 @@ export default function UpdatePublicacion({ publicacion }) {
             </Form.Floating>
             <Form.Floating className="mb-3">
               <Form.Control
-                id="tiposervicio"
+                id="tipo_servicio"
                 type="text"
                 placeholder="Tipo Servicio"
                 value={updatePost.tipo_servicio}
                 onChange={(e) => inputHandler(e)}
               />
-              <label htmlFor="tiposervicio">
+              <label htmlFor="tipo_servicio">
                 <i className="bi bi-gear"></i> Tipo Servicio
               </label>
             </Form.Floating>
@@ -199,50 +237,63 @@ export default function UpdatePublicacion({ publicacion }) {
             <Form.Floating className="mb-3">
               <Form.Control
                 type="email"
-                id="emailcontacto"
+                id="email_contacto"
                 placeholder="example@example.com"
                 value={updatePost.email_contacto}
                 onChange={(e) => inputHandler(e)}
               />
-              <label htmlFor="emailcontacto">
+              <label htmlFor="email_contacto">
                 <i className="bi bi-envelope"></i> Email de Contacto
               </label>
             </Form.Floating>
             <Form.Floating className="mb-3">
               <Form.Control
                 type="text"
-                id="telefonocontacto"
+                id="telefono_contacto"
                 placeholder="example@example.com"
                 value={updatePost.telefono_contacto}
                 onChange={(e) => inputHandler(e)}
               />
-              <label htmlFor="telefonocontacto">
+              <label htmlFor="telefono_contacto">
                 <i className="bi bi-phone"></i> Telefono de Contacto
               </label>
             </Form.Floating>
             <div className="d-flex gap-2">
-              <Form.Floating className="w-50 mb-3">
-                <Form.Control
-                  type="text"
+            <Form.Floating className="w-50 mb-3">
+                <Form.Select
                   id="ciudad"
-                  placeholder="Ciudad"
-                  value={updatePost.ciudad}
-                  onChange={(e) => inputHandler(e)}
-                />
+                  onChange={(e) => {
+                    handleRegionChange(e);
+                  }}
+                >
+                  <option value={updatePost.ciudad}>{updatePost.ciudad}</option>
+                  {regiones.map((region, index) => (
+                    <option key={index} value={region.name}>
+                      {region.name}
+                    </option>
+                  ))}
+                </Form.Select>
                 <label htmlFor="ciudad">
-                  <i className="bi bi-geo-alt"></i> Ciudad
+                  <i className="bi bi-geo-alt"></i> Busca por
                 </label>
               </Form.Floating>
               <Form.Floating className="w-50 mb-3">
-                <Form.Control
-                  type="text"
+              <Form.Select
                   id="comuna"
-                  placeholder="Comuna"
-                  value={updatePost.comuna}
-                  onChange={(e) => inputHandler(e)}
-                />
+                  onChange={(e) => {
+                    handleCommuneChange(e);
+                  }}
+                  disabled={!selectedRegion}
+                >
+                  <option value={updatePost.comuna}>{updatePost.comuna}</option>
+                  {comunas.map((commune) => (
+                    <option key={commune} value={commune}>
+                      {commune}
+                    </option>
+                  ))}
+                </Form.Select>
                 <label htmlFor="comuna">
-                  <i className="bi bi-geo-alt"></i> Comuna
+                  <i className="bi bi-geo-alt"></i> Busca por
                 </label>
               </Form.Floating>
             </div>

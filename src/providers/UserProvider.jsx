@@ -13,7 +13,6 @@ const UserProvider = ({ children }) => {
   const [misPublicaciones, setMisPublicaciones] = useState([]);
   const [misFavoritos, setMisFavoritos] = useState([]);
   const [respuesta, setRespuesta] = useState({});
-  const [page, setPage] = useState(1);
   const [filtros, setFiltros] = useState ({});
 
 
@@ -46,7 +45,7 @@ const UserProvider = ({ children }) => {
     setUserLogin(null);
   };
 
-  const getPublicaciones = async () => {
+  const getPublicaciones = async (page=1) => {
     let URL = `${URL_BASE}/servicios?page=${page}`;
     if(filtros?.titulo){
       URL += `&titulo=${filtros.titulo}`; 
@@ -68,8 +67,6 @@ const UserProvider = ({ children }) => {
     const data = await response.json();
 
     const { results, meta } = data;
-    console.log('Pase por getPublicaciones');
-
     setPublicaciones(results);
     setRespuesta(meta);
     setFiltros({});
@@ -90,7 +87,7 @@ const UserProvider = ({ children }) => {
   };
 
   const getPublicacionesUsuario = async () => {
-    const response = await fetch(`${URL_BASE}/user/servicios?page=${page}`, {
+    const response = await fetch(`${URL_BASE}/user/servicios`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -146,7 +143,7 @@ const UserProvider = ({ children }) => {
   };
 
   const getFavoritosUsuario = async () => {
-    const response = await fetch(`${URL_BASE}/user/favoritos?page=${page}`, {
+    const response = await fetch(`${URL_BASE}/user/favoritos`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -188,6 +185,20 @@ const UserProvider = ({ children }) => {
     return data;
   }
 
+  const updateProfileUser = async (newProfile) => {
+    const response = await fetch(`${URL_BASE}/perfil`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(newProfile),
+    });
+    const data = await response.json();
+
+    return data;
+  };
+
 
   useEffect(() => {
     if (token && userLogin) {
@@ -222,8 +233,8 @@ const UserProvider = ({ children }) => {
         filtros,
         setFiltros,
         deleteFavorito,
-        respuesta, 
-        setPage
+        respuesta,
+        updateProfileUser
       }}
     >
       {children}
