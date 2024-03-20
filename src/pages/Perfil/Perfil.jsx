@@ -8,11 +8,16 @@ export default function Perfil() {
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const passwordPattern = /^.{6,}$/;
   const form = useRef();
-  const { userLogin, setUserLogin } = useContext(UserContext);
+  const { userLogin, setUserLogin, updateProfileUser } = useContext(UserContext);
   const [updateUser, setUpdateUser] = useState({
     ...userLogin,
-    contraseña1: userLogin.contraseña,
+    contraseña1: userLogin.contraseña, 
+    direccion: ''
   });
+  const [regiones, setRegiones] = useState([]);
+  const [selectedRegion, setSelectedRegion] = useState('');
+  const [comunas, setComunas] = useState([]);
+  const [selectedCommune, setSelectedCommune] = useState('');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState('');
@@ -68,8 +73,49 @@ export default function Perfil() {
       setError('Las contraseñas no coinciden.');
       return;
     }
+    const result = await updateProfileUser(updateUser)
+
+    console.log(result);
     setUserLogin(updateUser);
   }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/data/chilean-locations.json');
+        const data = await response.json();
+        setRegiones(data.regiones);
+      } catch (error) {
+        console.error('Error fetching data: ', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleRegionChange = (e) => {
+    e.preventDefault();
+    const selectedRegion = e.target.value;
+    setSelectedRegion(selectedRegion);
+    setUpdateUser({ ...updateUser, ciudad: e.target.value });
+    // Filtrar las comunas correspondientes a la región seleccionada
+    const selectedRegionData = regiones.find(
+      (region) => region.name === selectedRegion
+    );
+    if (selectedRegionData) {
+      setComunas(selectedRegionData.comunas);
+    } else {
+      setComunas([]);
+    }
+    setSelectedCommune('');
+  };
+
+  const handleCommuneChange = (e) => {
+    e.preventDefault();
+    setSelectedCommune(e.target.value);
+    setUpdateUser({ ...updateUser, comuna: e.target.value });
+  };
+
 
   return (
     <Row className="w-100 p-3 justify-content-center p-md-5 mx-auto">
@@ -110,32 +156,42 @@ export default function Perfil() {
               <i className="bi bi-envelope"></i> Correo electrónico
             </label>
           </Form.Floating>
-          <Col className="d-flex gap-2">
             <Form.Floating className="mb-3">
-              <Form.Control
-                type="text"
+            <Form.Select
                 id="ciudad"
-                placeholder="Ciudad"
-                value={updateUser.ciudad}
-                onChange={(e) => inputHandler(e)}
-              />
-              <label htmlFor="ciudad">
-                <i className="bi bi-geo-alt"></i> Ciudad
-              </label>
+                value={selectedRegion}
+                onChange={(e) => {handleRegionChange(e)}}
+              >
+              <option value={updateUser.ciudad}>{updateUser.ciudad}</option>
+                {regiones.map((region, index) => (
+              <option key={index} value={region.name}>
+                {region.name}
+              </option>
+            ))}
+          </Form.Select>
+          <label htmlFor="ciudad">
+            <i className="bi bi-geo-alt"></i> Región
+          </label>
             </Form.Floating>
             <Form.Floating className="mb-3">
-              <Form.Control
-                type="text"
+            <Form.Select
                 id="comuna"
-                placeholder="Comuna"
-                value={updateUser.comuna}
-                onChange={(e) => inputHandler(e)}
-              />
-              <label htmlFor="comuna">
-                <i className="bi bi-geo-alt"></i> Comuna
-              </label>
+                value={selectedCommune}
+                onChange={(e)=>{handleCommuneChange(e)}}
+                disabled={!selectedRegion}
+              >
+              <option value={updateUser.comuna}>{updateUser.comuna}</option>
+              {comunas.map((commune) => (
+              <option key={commune} value={commune}>
+                {commune}
+              </option>
+            ))}
+          </Form.Select>
+          <label htmlFor="comuna">
+            <i className="bi bi-geo-alt"></i> Comuna
+          </label>
             </Form.Floating>
-          </Col>
+
           <Form.Floating className="mb-3">
             <Form.Control
               type="password"
