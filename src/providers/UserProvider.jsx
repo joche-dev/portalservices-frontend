@@ -12,6 +12,7 @@ const UserProvider = ({ children }) => {
   const [publicaciones, setPublicaciones] = useState([]);
   const [misPublicaciones, setMisPublicaciones] = useState([]);
   const [misFavoritos, setMisFavoritos] = useState([]);
+  const [respuesta, setRespuesta] = useState({});
   const [page, setPage] = useState(1);
   const [filtros, setFiltros] = useState ({});
 
@@ -65,8 +66,12 @@ const UserProvider = ({ children }) => {
     });
 
     const data = await response.json();
-    const { results } = data;
+
+    const { results, meta } = data;
+    console.log('Pase por getPublicaciones');
+
     setPublicaciones(results);
+    setRespuesta(meta);
     setFiltros({});
   };
 
@@ -216,7 +221,9 @@ const UserProvider = ({ children }) => {
         newFavorito,
         filtros,
         setFiltros,
-        deleteFavorito
+        deleteFavorito,
+        respuesta, 
+        setPage
       }}
     >
       {children}
