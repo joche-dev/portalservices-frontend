@@ -106,12 +106,12 @@ export default function DetalleService() {
               disabled={stateBtn}>
               <i className="bi bi-heart-fill"></i> Agregar Favorito
             </Button>
-          ) : (
+          ) : token ? (
             <Button variant="outline-danger me-3" onClick={() => removeFavorito(favoritoId)} 
               disabled={stateBtn}>
               <i className="bi bi-heartbreak-fill"></i> Remover Favorito
             </Button>
-          )}
+          ) : (null)}
           <Link to={'/services'}>
             <Button variant="success">Volver</Button>
           </Link>
