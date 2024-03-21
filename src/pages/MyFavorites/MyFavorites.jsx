@@ -16,13 +16,13 @@ export default function MyFavorites() {
       <h1 className="mb-3">Mis Favoritos</h1>
       <Row xs={1} md={2} lg={4} className="g-4">
         {misFavoritos?.length > 0 &&
-          misFavoritos.map((publicacion, index) => (
+          misFavoritos?.map((publicacion, index) => (
             <Col key={index}>
               <CardServicio publicacion={publicacion} />
             </Col>
           ))}
       </Row>
-      {!misFavoritos && (
+      {misFavoritos?.length <= 0 && (
         <p className="my-3">No hay publicaciones por mostrar.</p>
       )}
     </Container>

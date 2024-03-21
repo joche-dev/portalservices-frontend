@@ -52,7 +52,7 @@ export default function DetalleService() {
             let resultado = res.find(
               (fav) => fav.publicacion_id === publicacion.publicacion_id
             );
-            setFavoritoId(resultado.favorito_id);
+            setFavoritoId(resultado?.favorito_id);
           })
           .catch((err) => console.log(err));
       });

@@ -36,7 +36,7 @@ export default function Home() {
         <h1 className="">Últimos servicios subidos</h1>
         <p>Ingresa tu servicio o la de un vecino!</p>
         <Row xs={1} md={2} lg={4} className="g-4">
-          {publicaciones.slice(0,4).map((publicacion, id) => (
+          {publicaciones?.slice(0,4).map((publicacion, id) => (
             <Col key={id}>
               <CardServicio publicacion={publicacion} />
             </Col>

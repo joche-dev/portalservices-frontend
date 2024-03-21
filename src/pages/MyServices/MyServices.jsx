@@ -26,8 +26,8 @@ export default function MyServices() {
           </tr>
         </thead>
         <tbody>
-          {misPublicaciones.length > 0 &&
-            misPublicaciones.map((publicacion, index) => (
+          {misPublicaciones?.length > 0 &&
+            misPublicaciones?.map((publicacion, index) => (
               <tr className="align-middle" key={index}>
                 <td>
                   <img
@@ -55,7 +55,7 @@ export default function MyServices() {
             ))}
         </tbody>
       </Table>
-      {misPublicaciones.length <= 0 && (
+      {misPublicaciones?.length <= 0 && (
         <p className="my-3">No hay publicaciones por mostrar.</p>
       )}
     </Container>

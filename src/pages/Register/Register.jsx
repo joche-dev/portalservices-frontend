@@ -75,7 +75,6 @@ export default function Register() {
 
   async function submitHandler(e) {
     e.preventDefault();
-    console.log('datos a registrar:',user);
     setError(null);
     setSuccess(false);
 
@@ -109,15 +108,15 @@ export default function Register() {
       setError('Las contraseñas no coinciden.');
       return;
     } else {
-      console.log(user);
       const data = await registerUsuario(user);
       if (data.ok) {
         setMessage(data.message);
         setSuccess(true);
         form.current.reset();
+      }else{
+        setError('Email ya registrado!');
+        return;
       }
-      setError('Email ya registrado!');
-      return;
     }
   }
 
