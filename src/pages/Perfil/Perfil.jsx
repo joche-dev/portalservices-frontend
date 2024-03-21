@@ -74,9 +74,14 @@ export default function Perfil() {
       return;
     }
     const result = await updateProfileUser(updateUser)
-
-    console.log(result);
-    setUserLogin(updateUser);
+    if(result.ok){
+      setMessage('Actualización del usuario exitoso.');
+      setSuccess(true);
+      setUserLogin(updateUser);
+    }else {
+      setError('Actualización del usuario fallido.');
+      return;
+    }
   }
 
   useEffect(() => {

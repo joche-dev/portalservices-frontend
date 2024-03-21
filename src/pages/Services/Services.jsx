@@ -28,14 +28,14 @@ export default function Services() {
       <h1 className="text-center mb-3">Encuentra lo que necesitas</h1>
       <Filtro />
       <Row xs={1} md={2} lg={4} className="g-4">
-        {publicaciones.length > 0 &&
-          publicaciones.map((publicacion, index) => (
+        {publicaciones?.length > 0 &&
+          publicaciones?.map((publicacion, index) => (
             <Col key={index}>
               <CardServicio publicacion={publicacion} />
             </Col>
           ))}
       </Row>
-      {publicaciones.length <= 0 && (
+      {publicaciones?.length <= 0 && (
         <p className="my-3">No hay publicaciones por mostrar.</p>
       )}
       <section className='d-flex justify-content-center w-50 mx-auto mt-5'>
