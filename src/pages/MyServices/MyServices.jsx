@@ -6,11 +6,11 @@ import UpdatePublicacion from '../../components/UpdatePublicacion';
 import DeletePublicacion from '../../components/DeletePublicacion';
 
 export default function MyServices() {
-  const { userLogin, misPublicaciones, getPublicacionesUsuario } = useContext(UserContext);
+  const { userLogin, misPublicaciones, getPublicacionesUsuario } =
+    useContext(UserContext);
 
   useEffect(() => {
     getPublicacionesUsuario();
-    
   }, []);
 
   return (
@@ -26,8 +26,8 @@ export default function MyServices() {
           </tr>
         </thead>
         <tbody>
-          {misPublicaciones?.length > 0 &&
-            misPublicaciones?.map((publicacion, index) => (
+          {misPublicaciones && misPublicaciones.length > 0 ? (
+            misPublicaciones.map((publicacion, index) => (
               <tr className="align-middle" key={index}>
                 <td>
                   <img
@@ -49,15 +49,21 @@ export default function MyServices() {
                 </td>
                 <td>
                   <UpdatePublicacion publicacion={publicacion} />
-                  <DeletePublicacion publicacion_id={publicacion.publicacion_id} />
+                  <DeletePublicacion
+                    publicacion_id={publicacion.publicacion_id}
+                  />
                 </td>
               </tr>
-            ))}
+            ))
+          ) : (
+            <tr>
+              <td colSpan="3" className="text-center">
+                No hay publicaciones disponibles.
+              </td>
+            </tr>
+          )}
         </tbody>
       </Table>
-      {misPublicaciones?.length <= 0 && (
-        <p className="my-3">No hay publicaciones por mostrar.</p>
-      )}
     </Container>
   );
 }
